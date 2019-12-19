@@ -13,11 +13,13 @@ class TextStream {
   TextPainter painter;
   Offset baseOffset;
 
+  Size size;
   int yOffset = 0;
   int speed = 1;
 
-  TextStream(TextPainter painter, Offset baseOffset, int speed) {
+  TextStream(TextPainter painter, Offset baseOffset, Size size, int speed) {
     this.painter = painter;
+    this.size = size;
     this.baseOffset = baseOffset;
     this.speed = speed;
   }
@@ -51,7 +53,6 @@ class MatrixPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-//    Logger.debug('Size: $size');
     canvas.drawColor(Colors.black, BlendMode.src);
 
     if (_position.round() % 10 == 0) {
@@ -61,7 +62,10 @@ class MatrixPainter extends CustomPainter {
     for (TextStream stream in _textStreams) {
       final dx = stream.baseOffset.dx;
       final dy = stream.baseOffset.dy + stream.yOffset;
-      if (dy > size.height) {
+
+      stream.yOffset += stream.speed;
+
+      if (dy < -stream.size.height || dy  > size.height) {
         continue;
       }
 
@@ -69,7 +73,6 @@ class MatrixPainter extends CustomPainter {
 
       stream.painter.paint(canvas, offset);
 
-      stream.yOffset += stream.speed;
     }
   }
 
@@ -116,7 +119,9 @@ class MatrixPainter extends CustomPainter {
 
     int len = MIN_CHARACTERS + _randomSeed.nextInt(MAX_CHARACTERS - MIN_CHARACTERS);
     String text = _randomString(len);
+//    String text = CHARSET;
     Size size = _measureChars(text);
+//    Size size = Size(17, CHARSET.length * 35.0);
 //    Logger.debug('new stream: [$text], size: $size');
 
     final textSpan = TextSpan(
@@ -141,7 +146,7 @@ class MatrixPainter extends CustomPainter {
 
     int speed = 1 + _randomSeed.nextInt(MAX_SPEED);
 
-    _textStreams.add(TextStream(textPainter, offset, speed));
+    _textStreams.add(TextStream(textPainter, offset, size, speed));
   }
 
 
