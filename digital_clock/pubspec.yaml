@@ -18,7 +18,11 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/images/
   fonts:
-    - family: PressStart2P
+    - family: MontserratAlternates
       fonts:
-        - asset: third_party/PressStart2P-Regular.ttf
+        - asset: third_party/MontserratAlternates-Bold.ttf
+
+
