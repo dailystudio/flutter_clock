@@ -12,7 +12,7 @@ class _MatrixViewerState extends State<MatrixViewer>
     with SingleTickerProviderStateMixin {
 
   int _loop = 0;
-  double _position =  0;
+  double _count =  0;
   Animation<double> _animation;
   AnimationController controller;
 
@@ -35,21 +35,19 @@ class _MatrixViewerState extends State<MatrixViewer>
       }
     });
 
+    _animation = Tween(begin: 1.0, end: 100.0).animate(controller)
+      ..addListener(() {
+        setState(() {
+          _count = _animation.value;
+        });
+      });
   }
 
   @override
   Widget build(BuildContext context) {
-    _animation = Tween(begin: -100.0, end: 500.0).animate(controller)
-      ..addListener(() {
-        setState(() {
-          _position = _animation.value;
-        });
-      });
-
-
     return CustomPaint(
       size: Size(double.infinity, double.infinity),
-      painter: MatrixPainter(_position, _loop),
+      painter: MatrixPainter(_count, _loop),
     );
   }
 

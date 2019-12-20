@@ -59,6 +59,8 @@ class MatrixPainter extends CustomPainter {
       _generateNewStream(size);
     }
 
+    List<TextStream> useless = List();
+
     for (TextStream stream in _textStreams) {
       final dx = stream.baseOffset.dx;
       final dy = stream.baseOffset.dy + stream.yOffset;
@@ -66,13 +68,19 @@ class MatrixPainter extends CustomPainter {
       stream.yOffset += stream.speed;
 
       if (dy < -stream.size.height || dy  > size.height) {
+        if (dy > size.height) {
+          useless.add(stream);
+        }
         continue;
       }
 
       final offset = Offset(dx, dy);
 
       stream.painter.paint(canvas, offset);
+    }
 
+    for (TextStream s in useless) {
+      _textStreams.remove(s);
     }
   }
 
