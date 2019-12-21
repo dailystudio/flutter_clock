@@ -21,8 +21,11 @@ flutter:
   assets:
     - assets/images/
   fonts:
-    - family: MontserratAlternates
+    - family: SourceCodePro-Bold
       fonts:
-        - asset: third_party/MontserratAlternates-Bold.ttf
+        - asset: third_party/SourceCodePro-Bold.ttf
+    - family: CourierPrime-Bold
+      fonts:
+        - asset: third_party/CourierPrime-Bold.ttf
 
 
