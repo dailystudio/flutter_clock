@@ -4,6 +4,7 @@
 
 import 'dart:async';
 
+import 'package:digital_clock/widgets/charaters_viewer.dart';
 import 'package:digital_clock/widgets/matrix_painter.dart';
 import 'package:digital_clock/widgets/matrix_viewer.dart';
 import 'package:flutter/foundation.dart';
@@ -142,6 +143,15 @@ class _DigitalClockState extends State<DigitalClock> {
 //          ),
 //        ),
 
+        Container(
+          constraints: BoxConstraints.expand(),
+          decoration: BoxDecoration(
+            color: Colors.black
+          ),
+//          child: CharactersViewer(
+//            characters: "$hour:$minute"
+//          ),
+        ),
         Container(
           constraints: BoxConstraints.expand(),
           child: MatrixViewer(),
