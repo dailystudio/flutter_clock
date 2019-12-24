@@ -14,7 +14,6 @@ const TEXT_STYLE = TextStyle(
 
 const DEFAULT_ROWS = 50;
 const DEFAULT_COLS = 30;
-const DEFAULT_FONT_SIZE = 10.0;
 const REPLACEMENT_COUNT = 4;
 
 class PaintingInfo {
@@ -42,7 +41,7 @@ class CharactersPainter extends CustomPainter {
 
   int _cellWidth = 1;
   int _cellHeight = 1;
-  double _fontSize = DEFAULT_FONT_SIZE;
+  int _fontSize = DEFAULT_FONT_SIZE;
 
   TextStyle _textStyle = TEXT_STYLE;
   List<PaintingInfo> _paintingInfos = List();
@@ -271,7 +270,7 @@ class CharactersPainter extends CustomPainter {
 
   void _drawTextDirectly(Canvas canvas, Size size) {
     final textStyle = TEXT_STYLE.copyWith(
-      fontSize: _fontSize,
+      fontSize: _fontSize.toDouble(),
     );
 
     final textSpan = TextSpan(
@@ -303,10 +302,10 @@ class CharactersPainter extends CustomPainter {
     _cellWidth = (_canvasSize.width / cols).round();
     _cellHeight = (_canvasSize.height / rows).round();
 
-    _fontSize = min(_cellWidth.toDouble(), _cellHeight.toDouble());
+    _fontSize = min(_cellWidth, _cellHeight);
 
     _textStyle = TEXT_STYLE.copyWith(
-        fontSize: _fontSize,
+        fontSize: _fontSize.toDouble(),
 //        color: TEXT_STYLE.color.withAlpha((255 * _alpha).round())
     );
 

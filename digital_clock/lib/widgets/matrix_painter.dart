@@ -1,3 +1,4 @@
+import 'package:digital_clock/widgets/charaters_painter.dart';
 import 'package:flutter/material.dart';
 import 'package:digital_clock/development/logger.dart';
 import 'package:digital_clock/common/constants.dart';
@@ -22,12 +23,15 @@ class TextStream {
   Offset baseOffset;
   int yOffset = 0;
 
+  int fontSize = DEFAULT_FONT_SIZE;
   double baseScale = 1.0;
   double scaleDelta = 0;
 
   int speed = 1;
 
   TextPainter textPainter;
+  
+  List<TextPainter> streamPainters = List();
 
   TextStream(this.text, Size boundary) {
     _configureStreamParameters(boundary);
@@ -38,15 +42,56 @@ class TextStream {
 
     this.baseScale = 0.5 + randomSeed.nextDouble() * 0.5;
 
-    this.size = _measureChars(text, this.baseScale);
+    this.speed = 1 + randomSeed.nextInt(MAX_SPEED);
+    this.fontSize = (DEFAULT_FONT_SIZE * this.baseScale).round();
+//    this.textPainter = createPainter();
+
+    _pickupPainters();
+
+    this.size = _calculatePaintersSize();
 
     this.baseOffset = Offset(
         randomSeed.nextInt(boundary.width.round()).toDouble(),
         -size.height * (randomSeed.nextDouble() + 1)
     );
 
-    this.speed = 1 + randomSeed.nextInt(MAX_SPEED);
-    this.textPainter = createPainter();
+  }
+  
+  void _pickupPainters() {
+    streamPainters.clear();
+
+    String key;
+    for (int i = 0; i < text.length; i++) {
+      if (i < LEADING_CHARACTERS) {
+        key = "${text[i]}.L$i.$fontSize";
+      } else if (i >= text.length - TAIL_CHARACTERS) {
+        key = "${text[i]}.T${TAIL_CHARACTERS - (text.length - i)}.$fontSize";
+      } else {
+        key = "${text[i]}.B.$fontSize";
+      }
+
+      final TextPainter tp = TEXT_PAINTERS[key];
+//      Logger.debug('picking up key: $key, tp: $tp');
+      if (tp == null) {
+        continue;
+      }
+
+      streamPainters.add(tp);
+    }
+  }
+
+  Size _calculatePaintersSize() {
+    double width = 0;
+    double height = 0;
+    for (var tp in streamPainters) {
+      if (tp.width > width) {
+        width = tp.width;
+      }
+
+      height += tp.height;
+    }
+
+    return Size(width, height);
   }
 
   TextPainter createPainter() {
@@ -127,6 +172,7 @@ class MatrixPainter extends CustomPainter {
   static List<TextStream> _textStreams = List();
 
   MatrixPainter(double position, int loop) {
+    buildTextPainters();
 //    Logger.debug('pos: $position, loop: $loop [old: $_loop]');
     this._position = position;
 
@@ -141,7 +187,7 @@ class MatrixPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
 //    canvas.drawColor(Colors.black, BlendMode.src);
 
-    if (_position.round() % 10 == 0) {
+    if (_position.round() % STREAM_GENERATION_INTERVAL == 0) {
       _generateNewStream(size);
     }
 
@@ -162,9 +208,22 @@ class MatrixPainter extends CustomPainter {
         continue;
       }
 
-      final offset = Offset(dx, dy);
+//      final offset = Offset(dx, dy);
 
-      stream.textPainter.paint(canvas, offset);
+      double yOffset = 0;
+      for (TextPainter tp in stream.streamPainters) {
+        final charOffset = Offset(
+          dx,
+          dy + yOffset
+        );
+
+        if (tp != null) {
+          tp.paint(canvas, charOffset);
+          yOffset += tp.height;
+        }
+      }
+
+//      stream.textPainter.paint(canvas, offset);
     }
 
     for (TextStream s in useless) {

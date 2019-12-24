@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'dart:ui';
 
+import 'package:digital_clock/development/logger.dart';
 import 'package:flutter/material.dart';
 
 const CHARSET = 'abcdefghijklmnopqrstuvwxyz' +
@@ -15,8 +16,90 @@ const CHARSET = 'abcdefghijklmnopqrstuvwxyz' +
 //    '\u{30F0}\u{30F1}\u{30F2}\u{30F3}\u{30F4}\u{30F5}\u{30F6}\u{30F7}\u{30F8}\u{30F9}\u{30FA}\u{30FB}\u{30FC}\u{30FD}\u{30FE}\u{30FF}' +
     '';
 
+const int DEFAULT_FONT_SIZE = 15;
+const LEADING_CHARACTERS = 5;
+const TAIL_CHARACTERS = 5;
+
+const STREAM_GENERATION_INTERVAL = 5;
+
+final List<GradientColor> LEADING_GRADIENT_COLORS = List()
+  ..add(GradientColor(Colors.black, 0))
+  ..add(GradientColor(Colors.green, 1));
+final List<GradientColor> TAIL_GRADIENT_COLORS = List()
+  ..add(GradientColor(Colors.green, 0))
+  ..add(GradientColor(Colors.white, 1));
+
+
 final randomSeed = Random(DateTime.now().millisecondsSinceEpoch);
 
+final Map<String, TextPainter> TEXT_PAINTERS = Map();
+bool _isPaintersBuilt = false;
+
+void buildTextPainters() {
+  if (_isPaintersBuilt) {
+    return;
+  }
+
+  final start = DateTime.now().millisecondsSinceEpoch;
+  Logger.debug('build text painters...');
+
+  List<Color> leadingColors = calculateGradientColors(
+      LEADING_CHARACTERS, LEADING_GRADIENT_COLORS);
+  List<Color> tailColors = calculateGradientColors(
+      TAIL_CHARACTERS, TAIL_GRADIENT_COLORS);
+
+  for (int cIndex = 0; cIndex < CHARSET.length; cIndex++) {
+    for (int fontSize = (DEFAULT_FONT_SIZE * 0.5).round(); fontSize <= DEFAULT_FONT_SIZE; fontSize++) {
+      for (int lIndex = 0; lIndex < LEADING_CHARACTERS; lIndex++) {
+        String key = "${CHARSET[cIndex]}.L$lIndex.$fontSize";
+//        Logger.debug('generating painter for: $key, color: ${leadingColors[lIndex]}');
+
+        TEXT_PAINTERS[key] = _createPainter(
+            CHARSET[cIndex], leadingColors[lIndex], fontSize);
+      }
+
+      for (int tIndex = 0; tIndex < TAIL_CHARACTERS; tIndex++) {
+        String key = "${CHARSET[cIndex]}.T$tIndex.$fontSize";
+//        Logger.debug('generating painter for: $key, color: ${tailColors[tIndex]}');
+
+        TEXT_PAINTERS[key] = _createPainter(
+            CHARSET[cIndex], tailColors[tIndex], fontSize);
+      }
+
+      String key = "${CHARSET[cIndex]}.B.$fontSize";
+//      Logger.debug('generating painter for: $key');
+
+      TEXT_PAINTERS[key] = _createPainter(
+          CHARSET[cIndex], Colors.green, fontSize);
+    }
+  }
+
+  final end = DateTime.now().millisecondsSinceEpoch;
+  Logger.debug('build text painters is accomplished in ${end - start} millis.');
+
+  _isPaintersBuilt = true;
+}
+
+TextPainter _createPainter(String text, Color color, int fontSize) {
+  final textStyle = TextStyle(
+      color: color,
+      fontSize: fontSize.toDouble()
+  );
+
+  final textSpan = TextSpan(
+    text: text,
+    style: textStyle,
+  );
+
+  final painter = TextPainter(
+    text: textSpan,
+    textDirection: TextDirection.ltr,
+  );
+
+  painter.layout();
+
+  return painter;
+}
 
 String randomString(int len) {
   String result = "";
@@ -69,7 +152,7 @@ List<Color> calculateGradientColors(int len, List<GradientColor> targetColors) {
   GradientColor to;
   for (int i = 0; i < targetColors.length - 1; i++) {
     from = _getFromGradientColor(i, targetColors);
-    to = _getFromGradientColor(i + 1, targetColors);
+    to = _getToGradientColor(i + 1, targetColors);
 
     int count = ((to.percentage - from.percentage) * len).ceil();
     for (int j = 0; j < count; j++) {
