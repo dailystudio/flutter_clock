@@ -4,6 +4,14 @@ import 'package:flutter/cupertino.dart';
 import 'matrix_painter.dart';
 
 class MatrixViewer extends StatefulWidget {
+
+  final String time;
+
+  MatrixViewer({
+    Key key,
+    this.time,
+  }) : super(key: key);
+
   @override
   _MatrixViewerState createState() => _MatrixViewerState();
 }
@@ -47,7 +55,7 @@ class _MatrixViewerState extends State<MatrixViewer>
   Widget build(BuildContext context) {
     return CustomPaint(
       size: Size(double.infinity, double.infinity),
-      painter: MatrixPainter(_count, _loop),
+      painter: MatrixPainter(widget.time, _count, _loop),
     );
   }
 

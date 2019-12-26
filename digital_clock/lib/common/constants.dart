@@ -28,10 +28,10 @@ const int DEFAULT_FONT_SIZE = 15;
 const LEADING_CHARACTERS = 5;
 const TAIL_CHARACTERS = 5;
 
-const STREAM_GENERATION_INTERVAL = 2;
+const STREAM_GENERATION_INTERVAL = 4;
 
 final List<GradientColor> LEADING_GRADIENT_COLORS = List()
-  ..add(GradientColor(Colors.black, 0))
+  ..add(GradientColor(Colors.black.withAlpha(0), 0))
   ..add(GradientColor(Colors.green, 1));
 final List<GradientColor> TAIL_GRADIENT_COLORS = List()
   ..add(GradientColor(Colors.green, 0))
@@ -181,7 +181,7 @@ List<Color> calculateGradientColors(int len, List<GradientColor> targetColors) {
 
 
 Color getGradientColor(Color from, Color to, double percentage) {
-  return Color.fromARGB(255,
+  return Color.fromARGB(from.alpha + ((to.alpha - from.alpha) * percentage).round(),
       from.red + ((to.red - from.red) * percentage).round(),
       from.green + ((to.green - from.green) * percentage).round(),
       from.blue + ((to.blue - from.blue) * percentage).round());
