@@ -17,24 +17,17 @@ const DEFAULT_COLS = 30;
 const REPLACEMENT_COUNT = 4;
 
 class PaintingInfo {
+
   final Offset offset;
+  final String text;
 
-  List<TextPainter> painters;
-
-  PaintingInfo(this.offset) {
-    painters = List();
-  }
-
+  PaintingInfo(this.text, this.offset);
 }
 
-class CharactersPainter extends CustomPainter {
+class CharactersPainter {
 
   String _characters;
   int _startMillis;
-
-  List<Point> _digits = List();
-
-  Size _canvasSize = Size(0, 0);
 
   int rows = DEFAULT_ROWS;
   int cols = DEFAULT_COLS;
@@ -46,9 +39,19 @@ class CharactersPainter extends CustomPainter {
   TextStyle _textStyle = TEXT_STYLE;
   List<PaintingInfo> _paintingInfos = List();
 
+  static List<Point> _digits = List();
+
   CharactersPainter(String characters) {
     _characters = characters;
     _startMillis = DateTime.now().millisecondsSinceEpoch;
+
+    if (_digits.length <= 0) {
+      _initDigits();
+    }
+  }
+
+  void _initDigits() {
+    Logger.debug('init digits');
 
     _digits.add(Point(7, 10));
     _digits.add(Point(7, 11));
@@ -228,21 +231,17 @@ class CharactersPainter extends CustomPainter {
     _digits.add(Point(13, 22));
     _digits.add(Point(13, 23));
     _digits.add(Point(13, 24));
-
   }
 
-  @override
   void paint(Canvas canvas, Size size) {
-    if (size != _canvasSize) {
-      _canvasSize = size;
-      _calculateDimensions();
-    }
+    _calculateDimensions(size);
 
-//    _drawGrids(canvas, size);
-    _drawTextDigitByDigit(canvas, size);
+    _drawGrids(canvas, size);
+//    _drawTextDigitByDigit(canvas, size);
   }
 
   void _drawGrids(Canvas canvas, Size size) {
+    Logger.debug('_cellWidth = $_cellWidth, _cellHeight = $_cellHeight');
     Paint linePaint = Paint();
     linePaint..color = Colors.orange;
     linePaint..strokeWidth = 1;
@@ -258,13 +257,21 @@ class CharactersPainter extends CustomPainter {
 
   void _drawTextDigitByDigit(Canvas canvas, Size size) {
     for (int i = 0; i < _digits.length; i++) {
-//      int replacementIndex = randomSeed.nextInt(REPLACEMENT_COUNT);
-      int replacementIndex = (DateTime.now().millisecondsSinceEpoch - _startMillis) % REPLACEMENT_COUNT;
+      double xOffset = _paintingInfos[i].offset.dx;
+      double yOffset = _paintingInfos[i].offset.dy;
 
+      for (int c = 0; c < _paintingInfos[i].text.length; c++) {
+        String key = "${_paintingInfos[i].text[c]}.T3.$_fontSize";
+        var painter = TEXT_PAINTERS[key];
 
-      var painter = _paintingInfos[i].painters[replacementIndex];
+        final Offset offset = Offset(
+            xOffset, yOffset
+        );
 
-      painter.paint(canvas, _paintingInfos[i].offset);
+        painter.paint(canvas, offset);
+
+        xOffset += painter.minIntrinsicWidth;
+      }
     }
   }
 
@@ -291,25 +298,18 @@ class CharactersPainter extends CustomPainter {
     painter.paint(canvas, Offset(offsetX, offsetY));
   }
 
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-//    return _characters != (oldDelegate as CharactersPainter)._characters;
-//    return _alpha != (oldDelegate as CharactersPainter)._alpha;
-    return true;
-  }
-
-  void _calculateDimensions() {
-    _cellWidth = (_canvasSize.width / cols).round();
-    _cellHeight = (_canvasSize.height / rows).round();
-
+  void _calculateDimensions(Size canvasSize) {
+    _cellWidth = (canvasSize.width / cols).round();
+    _cellHeight = (canvasSize.height / rows).round();
     _fontSize = min(_cellWidth, _cellHeight);
-
     _textStyle = TEXT_STYLE.copyWith(
         fontSize: _fontSize.toDouble(),
 //        color: TEXT_STYLE.color.withAlpha((255 * _alpha).round())
     );
 
     Size size = measureChars('0', _textStyle);
+
+    final count = (_cellWidth / size.width).floor();
 
     _paintingInfos.clear();
 
@@ -320,23 +320,9 @@ class CharactersPainter extends CustomPainter {
           _digits[i].y * _cellHeight.toDouble()
       );
 
-      PaintingInfo paintingInfo = PaintingInfo(offset);
-
-      for (int r = 0; r < REPLACEMENT_COUNT; r++) {
-        final textSpan = TextSpan(
-          text: randomString((_cellWidth / size.width).floor()),
-          style: _textStyle,
-        );
-
-        TextPainter painter = TextPainter(
-          text: textSpan,
-          textDirection: TextDirection.ltr,
-        );
-
-        painter.layout();
-
-        paintingInfo.painters.add(painter);
-      }
+      PaintingInfo paintingInfo = PaintingInfo(
+          randomString(count),
+          offset);
 
       _paintingInfos.add(paintingInfo);
     }

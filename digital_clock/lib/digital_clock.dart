@@ -4,8 +4,6 @@
 
 import 'dart:async';
 
-import 'package:digital_clock/widgets/charaters_viewer.dart';
-import 'package:digital_clock/widgets/matrix_painter.dart';
 import 'package:digital_clock/widgets/matrix_viewer.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_clock_helper/model.dart';

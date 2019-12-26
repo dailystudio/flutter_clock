@@ -16,11 +16,19 @@ const CHARSET = 'abcdefghijklmnopqrstuvwxyz' +
 //    '\u{30F0}\u{30F1}\u{30F2}\u{30F3}\u{30F4}\u{30F5}\u{30F6}\u{30F7}\u{30F8}\u{30F9}\u{30FA}\u{30FB}\u{30FC}\u{30FD}\u{30FE}\u{30FF}' +
     '';
 
+const TEXT_STYLE = TextStyle(
+    color: Colors.green,
+//    fontFamily: 'SourceCodePro-Bold',
+//    fontFamily: 'CourierPrime-Bold',
+    height: 1
+);
+
+
 const int DEFAULT_FONT_SIZE = 15;
 const LEADING_CHARACTERS = 5;
 const TAIL_CHARACTERS = 5;
 
-const STREAM_GENERATION_INTERVAL = 5;
+const STREAM_GENERATION_INTERVAL = 2;
 
 final List<GradientColor> LEADING_GRADIENT_COLORS = List()
   ..add(GradientColor(Colors.black, 0))
@@ -49,7 +57,7 @@ void buildTextPainters() {
       TAIL_CHARACTERS, TAIL_GRADIENT_COLORS);
 
   for (int cIndex = 0; cIndex < CHARSET.length; cIndex++) {
-    for (int fontSize = (DEFAULT_FONT_SIZE * 0.5).round(); fontSize <= DEFAULT_FONT_SIZE; fontSize++) {
+    for (int fontSize = 1; fontSize <= DEFAULT_FONT_SIZE; fontSize++) {
       for (int lIndex = 0; lIndex < LEADING_CHARACTERS; lIndex++) {
         String key = "${CHARSET[cIndex]}.L$lIndex.$fontSize";
 //        Logger.debug('generating painter for: $key, color: ${leadingColors[lIndex]}');
