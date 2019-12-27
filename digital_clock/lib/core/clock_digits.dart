@@ -1,5 +1,5 @@
 import 'dart:math';
-
+import 'dart:ui' as ui;
 import 'package:digital_clock/core/text_stream.dart';
 import 'package:digital_clock/development/logger.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,37 +15,37 @@ const DIGIT_COLS = 4;
 
 final List<Point> DIGIT_0 = List()
   ..add(Point(0, 0))
-  ..add(Point(0, 1))
+//  ..add(Point(0, 1))
   ..add(Point(0, 2))
-  ..add(Point(0, 3))
+//  ..add(Point(0, 3))
   ..add(Point(0, 4))
-  ..add(Point(1, 4))
+//  ..add(Point(1, 4))
   ..add(Point(2, 4))
-  ..add(Point(2, 3))
+//  ..add(Point(2, 3))
   ..add(Point(2, 2))
-  ..add(Point(2, 1))
-  ..add(Point(2, 0))
-  ..add(Point(1, 0));
+//  ..add(Point(2, 1))
+  ..add(Point(2, 0));
+//  ..add(Point(1, 0));
 
 
 final List<Point> DIGIT_1 = List()
   ..add(Point(1, 0))
-  ..add(Point(1, 1))
+//  ..add(Point(1, 1))
   ..add(Point(1, 2))
-  ..add(Point(1, 3))
+//  ..add(Point(1, 3))
   ..add(Point(1, 4));
 
 final List<Point> DIGIT_2 = List()
   ..add(Point(0, 0))
-  ..add(Point(1, 0))
+//  ..add(Point(1, 0))
   ..add(Point(2, 0))
-  ..add(Point(2, 1))
+//  ..add(Point(2, 1))
   ..add(Point(2, 2))
-  ..add(Point(1, 2))
+//  ..add(Point(1, 2))
   ..add(Point(0, 2))
-  ..add(Point(0, 3))
+//  ..add(Point(0, 3))
   ..add(Point(0, 4))
-  ..add(Point(1, 4))
+//  ..add(Point(1, 4))
   ..add(Point(2, 4));
 
 final List<Point> DIGIT_3 = List()
@@ -63,13 +63,13 @@ final List<Point> DIGIT_3 = List()
 
 final List<Point> DIGIT_4 = List()
   ..add(Point(0, 0))
-  ..add(Point(0, 1))
+//  ..add(Point(0, 1))
   ..add(Point(0, 2))
-  ..add(Point(1, 2))
+//  ..add(Point(1, 2))
   ..add(Point(2, 0))
-  ..add(Point(2, 1))
+//  ..add(Point(2, 1))
   ..add(Point(2, 2))
-  ..add(Point(2, 3))
+//  ..add(Point(2, 3))
   ..add(Point(2, 4));
 
 final List<Point> DIGIT_5 = List()
@@ -162,7 +162,7 @@ class DigitStream {
 
 class ClockDigits {
 
-  String _characters;
+  static String _characters;
 
   int rows = DEFAULT_ROWS;
   int cols = DEFAULT_COLS;
@@ -179,9 +179,22 @@ class ClockDigits {
   static Rect _boundary = Rect.fromLTRB(0, 0, 0, 0);
   static bool _isBoundaryCalculated = false;
   static Map<String, DigitStream> _digitStreams = Map();
+  static double increment = 0;
 
-  ClockDigits(String characters) {
+  Map<String, ui.Image> _assets;
+
+  ClockDigits(String characters, Map<String, ui.Image> assets) {
+//    Logger.debug('_characters = $_characters, characters = $characters');
+
+    if (_characters != characters) {
+      Logger.debug('reset increment');
+      increment = 0;
+    }
     _characters = characters;
+    _assets = assets;
+
+    Logger.debug('assets: $assets');
+
     if (DIGITS_MATRIX.length <= 0) {
       DIGITS_MATRIX["0"] = DIGIT_0;
       DIGITS_MATRIX["1"] = DIGIT_1;
@@ -215,6 +228,8 @@ class ClockDigits {
         _filledGrids.add(Point(p.x + startCols, startRows + p.y));
       }
 
+      _filledGrids.add(Point(-1, -1));
+
       startCols += DIGITS_COLS[i];
     }
 
@@ -227,19 +242,97 @@ class ClockDigits {
 
   void paint(Canvas canvas, Size size) {
 //    _drawGrids(canvas, size);
+    _drawTimeMatrix(canvas, size);
+//    _drawImageInc(canvas, size);
+  }
+
+  void _drawImageInc(Canvas canvas, Size size) {
+    if (_assets == null) {
+      return;
+    }
+
+    Paint paint = Paint();
+    paint..color = Colors.green;
+    paint..style = PaintingStyle.fill;
+//    paint..colorFilter = ColorFilter.mode(Colors.green, BlendMode.srcATop);
+//    paint..strokeWidth = 3;
+
+    ui.Image image = _assets['background'];
+
+    Size imageSize = Size(
+        image.width.toDouble(),
+        image.height.toDouble()
+    );
+
+    Logger.debug('image: $imageSize, aspect: ${imageSize.width / imageSize.height}');
+    Logger.debug('canvas: $size, aspect: ${size.width / size.height}');
+
+    double scale = _calculateScale(imageSize, size);
+    Logger.debug("painting scale ... [$scale]");
+
+    double destWidth = image.width * scale;
+    double destHeight = image.height * scale;
+    double offsetX = (size.width - destWidth) / 2.0;
+    double offsetY = (size.height - destHeight) / 2.0;
+    Logger.debug("painting dest ... w = $destWidth, h = $destHeight");
+    Logger.debug("painting offset ... x = $offsetX, y = $offsetY");
+
+    double proportion = (100 - increment) / 100.toDouble();
+    double srcYOffset = image.height * proportion;
+    double srcIncHeight = image.height * (1 - proportion);
+    double dstYOffset = destHeight * proportion;
+    double dstIncHeight = destHeight * (1 - proportion);
+    Logger.debug("increment ...increment = $increment");
+    Logger.debug("increment ...proportion = $proportion");
+    Logger.debug("increment ...srcYOffset = $srcYOffset");
+    Logger.debug("increment ...srcIncHeight = $srcIncHeight");
+    Logger.debug("increment ...dstYOffset = $dstYOffset");
+    Logger.debug("increment ...dstIncHeight = $dstIncHeight");
+
+    Rect srcRect = Rect.fromLTWH(0, srcYOffset, image.width.toDouble(), srcIncHeight);
+    Rect dstRect = Rect.fromLTWH(offsetX, offsetY + dstYOffset, destWidth, dstIncHeight);
+
+    canvas.drawImageRect(image, srcRect, dstRect, paint);
+
+    if (increment < 100) {
+      increment += 0.1;
+    }
+  }
+
+  void _drawTimeMatrix(Canvas canvas, Size size) {
+    if (_assets == null) {
+      return;
+    }
 
 
-    Paint occupiedPaint = Paint();
-    occupiedPaint..color = Colors.white.withAlpha(128);
-    occupiedPaint..style = PaintingStyle.fill;
+    Paint paint = Paint();
+    paint..color = Colors.green;
+    paint..style = PaintingStyle.fill;
+    paint..colorFilter = ColorFilter.mode(Colors.green, BlendMode.srcATop);
+    paint..strokeWidth = 3;
+//    paint..maskFilter = MaskFilter.blur(BlurStyle.inner, 10.0);
 
+    ui.Image image = _assets['baseline_speaker_black_48'];
+    Rect srcRect = Rect.fromLTWH(0, 0, image.width.toDouble(), image.height.toDouble());
     Rect r;
+    Rect lastRect;
     for (var p in _filledGrids) {
+      if (p.x == -1 && p.y == -1) {
+        lastRect = null;
+        continue;
+      }
       r = Rect.fromLTWH(p.x * _cellWidth.toDouble(), p.y * _cellHeight.toDouble(),
           _cellWidth.toDouble(), _cellHeight.toDouble());
-      canvas.drawRect(r, occupiedPaint);
+
+      canvas.drawImageRect(image, srcRect, r, paint);
+
+      if (lastRect != null) {
+        canvas.drawLine(lastRect.center, r.center, paint);
+      }
+
+      lastRect = r;
+//      canvas.drawRect(r, occupiedPaint);
     }
-//    _drawTextDigitByDigit(canvas, size);
   }
 
   void _drawGrids(Canvas canvas, Size size) {
@@ -288,6 +381,25 @@ class ClockDigits {
 
   Rect getBoundary() {
     return _boundary;
+  }
+
+
+  double _calculateScale(Size srcSize, Size destSize) {
+    if (srcSize == null || destSize == null) {
+      return 1.0;
+    }
+
+    double iRatio = srcSize.width / srcSize.height;
+    double cRatio = destSize.width / destSize.height;
+
+    double ratio = 1.0;
+    if (iRatio > cRatio) {
+      ratio = destSize.height / srcSize.height;
+    } else {
+      ratio = destSize.width / srcSize.width;
+    }
+
+    return ratio;
   }
 
 }

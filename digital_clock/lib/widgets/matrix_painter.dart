@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:ui' as ui;
 import 'package:digital_clock/development/logger.dart';
 import 'package:digital_clock/common/constants.dart';
 import 'package:digital_clock/core/clock_digits.dart';
@@ -14,7 +15,7 @@ class MatrixPainter extends CustomPainter {
 
   ClockDigits _clockDigits;
 
-  MatrixPainter(this.time, double position, int loop) {
+  MatrixPainter(this.time, double position, int loop, Map<String, ui.Image> assets) {
     buildTextPainters();
 //    Logger.debug('pos: $position, loop: $loop [old: $_loop]');
     this._position = position;
@@ -23,7 +24,7 @@ class MatrixPainter extends CustomPainter {
       _textStreams.clear();
     }
 
-    _clockDigits = ClockDigits(time);
+    _clockDigits = ClockDigits(time, assets);
 
     _loop = loop;
   }
@@ -44,9 +45,9 @@ class MatrixPainter extends CustomPainter {
       _textStreams.add(ts);
     }
 
+    paintStreams(canvas, size, _textStreams);
     _clockDigits.layout(size);
     _clockDigits.paint(canvas, size);
-    paintStreams(canvas, size, _textStreams);
   }
 
   void paintStreams(Canvas canvas, Size size, List<TextStream> streams) {

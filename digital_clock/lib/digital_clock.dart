@@ -127,13 +127,21 @@ class _DigitalClockState extends State<DigitalClock> {
 
     return Stack(
       children: <Widget>[
-        Positioned(  //
-          left: 0, right: 0, top: 0, bottom: 0,
-          child: Image(
-            image: AssetImage('assets/images/background.jpg'),
-            fit : BoxFit.cover,
-          ),
-        ),
+         Container(
+            constraints: BoxConstraints.expand(),
+            decoration: BoxDecoration(
+              color: Colors.black
+            ),
+         ),
+
+//        Positioned(  //
+//          left: 0, right: 0, top: 0, bottom: 0,
+//          child: Image(
+//            image: AssetImage('assets/images/background.jpg'),
+//            fit : BoxFit.cover,
+//          ),
+//        ),
+
 //        Positioned(
 //          top: 10, right: 10,
 //          child: DefaultTextStyle(
@@ -142,15 +150,6 @@ class _DigitalClockState extends State<DigitalClock> {
 //          ),
 //        ),
 
-//        Container(
-//          constraints: BoxConstraints.expand(),
-//          decoration: BoxDecoration(
-//            color: Colors.black
-//          ),
-////          child: CharactersViewer(
-////            characters: "$hour:$minute"
-////          ),
-//        ),
         Container(
           constraints: BoxConstraints.expand(),
           child: MatrixViewer(time: "$hour:$minute"),
