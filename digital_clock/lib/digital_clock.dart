@@ -5,7 +5,7 @@
 import 'dart:async';
 
 import 'package:digital_clock/widgets/matrix_viewer.dart';
-import 'package:digital_clock/widgets/pebble_viewer.dart';
+import 'package:digital_clock/widgets/side_display.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_clock_helper/model.dart';
 import 'package:flutter/material.dart';
@@ -111,6 +111,8 @@ class _DigitalClockState extends State<DigitalClock> {
     final hour =
         DateFormat(widget.model.is24HourFormat ? 'HH' : 'hh').format(_dateTime);
     final minute = DateFormat('mm').format(_dateTime);
+    final date = DateFormat('MMMM d, yyyy').format(_dateTime);
+    final apm = DateFormat('aaa').format(_dateTime);
     final fontSize = MediaQuery.of(context).size.width / 7.5;
     final offset = -fontSize / 7;
     final defaultStyle = TextStyle(
@@ -151,13 +153,21 @@ class _DigitalClockState extends State<DigitalClock> {
 //          ),
 //        ),
 
-        Container(
-          constraints: BoxConstraints.expand(
-            width: 400,
-          ),
-          child: MatrixViewer(time: "$hour:$minute"),
-//          child: PebbleViewer(time: "$hour:$minute"),
-        ),
+        Row(
+          children: <Widget>[
+            Expanded(
+              flex: 60,
+              child: MatrixViewer(time: "$hour:$minute"),
+            ),
+            Expanded(
+              flex: 40,
+              child: SideDisplay(
+                dateTime: _dateTime,
+                model: widget.model,
+              ),
+            )
+          ],
+        )
       ],
     );
   }

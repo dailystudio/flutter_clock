@@ -13,9 +13,7 @@ class MatrixPainter extends CustomPainter {
   static int _loop = 0;
   static List<TextStream> _textStreams = List();
 
-  ClockDigits _clockDigits;
-
-  MatrixPainter(this.time, double position, int loop, Map<String, ui.Image> assets) {
+  MatrixPainter(this.time, double position, int loop) {
     buildTextPainters();
 //    Logger.debug('pos: $position, loop: $loop [old: $_loop]');
     this._position = position;
@@ -23,8 +21,6 @@ class MatrixPainter extends CustomPainter {
     if (_loop != loop) {
       _textStreams.clear();
     }
-
-    _clockDigits = ClockDigits(time, assets);
 
     _loop = loop;
   }
@@ -46,8 +42,6 @@ class MatrixPainter extends CustomPainter {
     }
 
     paintStreams(canvas, size, _textStreams);
-    _clockDigits.layout(size);
-    _clockDigits.paint(canvas, size);
   }
 
   void paintStreams(Canvas canvas, Size size, List<TextStream> streams) {
