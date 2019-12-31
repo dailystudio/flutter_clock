@@ -128,47 +128,60 @@ class _DigitalClockState extends State<DigitalClock> {
 //      ],
     );
 
-    return Stack(
-      children: <Widget>[
-         Container(
-            constraints: BoxConstraints.expand(),
-            decoration: BoxDecoration(
-              color: Colors.black
+    return Container(
+      constraints: BoxConstraints.expand(),
+      child: Stack(
+        children: <Widget>[
+           Container(
+              constraints: BoxConstraints.expand(),
+              decoration: BoxDecoration(
+                color: Colors.black
+              ),
+           ),
+
+          Positioned(  //
+            left: 0, right: 0, top: 0, bottom: 0,
+            child: Image(
+              image: AssetImage('assets/images/background.jpg'),
+              fit : BoxFit.cover,
             ),
-         ),
+          ),
 
-//        Positioned(  //
-//          left: 0, right: 0, top: 0, bottom: 0,
-//          child: Image(
-//            image: AssetImage('assets/images/background.jpg'),
-//            fit : BoxFit.cover,
-//          ),
-//        ),
+          Positioned(  //
+            left: 0, right: 0, top: 0, bottom: 0,
+            child: MatrixViewer(time: "$hour:$minute"),
+          ),
 
-//        Positioned(
-//          top: 10, right: 10,
-//          child: DefaultTextStyle(
-//            style: defaultStyle,
-//            child: Text("$hour:$minute")
-//          ),
-//        ),
-
-        Row(
-          children: <Widget>[
-            Expanded(
-              flex: 60,
-              child: MatrixViewer(time: "$hour:$minute"),
-            ),
-            Expanded(
-              flex: 40,
+          Positioned(
+            right: 0, top: 0, bottom: 0,
+            child: Container(  //
+              constraints: BoxConstraints.expand(
+                width: 230
+              ),
               child: SideDisplay(
                 dateTime: _dateTime,
                 model: widget.model,
               ),
-            )
-          ],
-        )
-      ],
+            ),
+          ),
+
+//          Row(
+//            children: <Widget>[
+//              Expanded(
+//                flex: 60,
+//                child: MatrixViewer(time: "$hour:$minute"),
+//              ),
+//              Expanded(
+//                flex: 40,
+//                child: SideDisplay(
+//                  dateTime: _dateTime,
+//                  model: widget.model,
+//                ),
+//              )
+//            ],
+//          )
+        ],
+      ),
     );
   }
 }

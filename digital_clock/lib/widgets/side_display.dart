@@ -13,7 +13,7 @@ const CLOCK_TIME_STYLE = TextStyle(
 
 const CLOCK_APM_STYLE = TextStyle(
   color: Colors.green,
-  fontSize: 24,
+  fontSize: 18,
   fontWeight: FontWeight.bold,
 );
 
@@ -52,33 +52,62 @@ class _SideDisplayState extends State<SideDisplay>
 
     return Container(
       decoration: BoxDecoration(
-//        color: Colors.white.withAlpha(128)
+        color: Color(0xFF000910).withAlpha(220)
+//        color: Colors.black
           ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+      child: Stack(
+        alignment: Alignment.center,
         children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                "$hour:$minute",
-                style: CLOCK_TIME_STYLE,
-              ),
-              Container(
-                padding: EdgeInsets.only(left: 10, top: 12),
-                child: Text(
-                  "$amOrPm",
-                  style: CLOCK_APM_STYLE,
+          Positioned(
+            top: 0,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    Text(
+                      "$hour:$minute",
+                      style: CLOCK_TIME_STYLE,
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(left: 5, bottom: 12),
+                      child: Text(
+                        "$amOrPm",
+                        style: CLOCK_APM_STYLE,
+                      ),
+                    )
+                  ],
                 ),
-              )
-            ],
+                Text(
+                  "$date",
+                  style: CLOCK_DATE_STYLE,
+                ),
+              ],
+            ),
           ),
-          Text(
-            "$date",
-            style: CLOCK_DATE_STYLE,
+          Positioned(
+            bottom: 0,
+            right: 0,
+            child: Container(
+              padding: EdgeInsets.all(15),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: <Widget>[
+                  Text(
+                    "${widget.model.temperatureString}",
+                    style: CLOCK_DATE_STYLE,
+                  ),
+                  Text(
+                    "${widget.model.location}",
+                    style: CLOCK_DATE_STYLE,
+                  ),
+                ],
+              ),
+            ),
           )
-        ],
+        ]
       ),
     );
   }
