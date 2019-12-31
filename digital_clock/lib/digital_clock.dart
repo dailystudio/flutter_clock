@@ -5,6 +5,7 @@
 import 'dart:async';
 
 import 'package:digital_clock/widgets/matrix_viewer.dart';
+import 'package:digital_clock/widgets/pebble_viewer.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_clock_helper/model.dart';
 import 'package:flutter/material.dart';
@@ -151,8 +152,11 @@ class _DigitalClockState extends State<DigitalClock> {
 //        ),
 
         Container(
-          constraints: BoxConstraints.expand(),
+          constraints: BoxConstraints.expand(
+            width: 400,
+          ),
           child: MatrixViewer(time: "$hour:$minute"),
+//          child: PebbleViewer(time: "$hour:$minute"),
         ),
       ],
     );
