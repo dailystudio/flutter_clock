@@ -1,3 +1,4 @@
+import 'package:digital_clock/widgets/widget_icon.dart';
 import 'package:intl/intl.dart';
 
 import 'package:flutter/material.dart';
@@ -7,7 +8,7 @@ import 'package:flutter/cupertino.dart';
 
 const CLOCK_TIME_STYLE = TextStyle(
   color: Colors.green,
-  fontSize: 72,
+  fontSize: 64,
   fontWeight: FontWeight.bold,
 );
 
@@ -95,9 +96,18 @@ class _SideDisplayState extends State<SideDisplay>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: <Widget>[
-                  Text(
-                    "${widget.model.temperatureString}",
-                    style: CLOCK_DATE_STYLE,
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 5),
+                        child: WeatherIcon(),
+                      ),
+                      Text(
+                        "${widget.model.temperatureString}",
+                        style: CLOCK_DATE_STYLE,
+                      ),
+                    ],
                   ),
                   Text(
                     "${widget.model.location}",

@@ -21,6 +21,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
+    - assets/images/weather/
   fonts:
     - family: SourceCodePro-Bold
       fonts:
