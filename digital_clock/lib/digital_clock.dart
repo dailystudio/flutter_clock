@@ -108,30 +108,17 @@ class _DigitalClockState extends State<DigitalClock> {
     final colors = Theme.of(context).brightness == Brightness.light
         ? _lightTheme
         : _darkTheme;
-    final hour =
-        DateFormat(widget.model.is24HourFormat ? 'HH' : 'hh').format(_dateTime);
-    final minute = DateFormat('mm').format(_dateTime);
-    final date = DateFormat('MMMM d, yyyy').format(_dateTime);
-    final apm = DateFormat('aaa').format(_dateTime);
-    final fontSize = MediaQuery.of(context).size.width / 7.5;
-    final offset = -fontSize / 7;
-    final defaultStyle = TextStyle(
-      color: colors[_Element.text],
-      fontFamily: 'MontserratAlternates',
-      fontSize: fontSize,
-//      shadows: [
-//        Shadow(
-//          blurRadius: 0,
-//          color: colors[_Element.shadow],
-//          offset: Offset(10, 0),
-//        ),
-//      ],
-    );
 
     return Container(
       constraints: BoxConstraints.expand(),
       child: Stack(
         children: <Widget>[
+          Container(
+            constraints: BoxConstraints.expand(),
+            decoration: BoxDecoration(
+              color: Colors.black
+            ),
+          ),
           Positioned(  //
             left: 0, right: 0, top: 0, bottom: 0,
             child: Image(
@@ -139,7 +126,6 @@ class _DigitalClockState extends State<DigitalClock> {
               fit : BoxFit.cover,
             ),
           ),
-
           Positioned(  //
             left: 0, right: 0, top: 0, bottom: 0,
             child: MatrixViewer(model: widget.model),
