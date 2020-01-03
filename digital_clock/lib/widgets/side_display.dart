@@ -11,7 +11,7 @@ const CLOCK_TIME_STYLE = TextStyle(
   fontWeight: FontWeight.bold,
 );
 
-const CLOCK_APM_STYLE = TextStyle(
+const CLOCK_AMORPM_STYLE = TextStyle(
   color: Colors.green,
   fontSize: 18,
   fontWeight: FontWeight.bold,
@@ -71,11 +71,14 @@ class _SideDisplayState extends State<SideDisplay>
                       "$hour:$minute",
                       style: CLOCK_TIME_STYLE,
                     ),
-                    Container(
-                      padding: EdgeInsets.only(left: 5, bottom: 12),
-                      child: Text(
-                        "$amOrPm",
-                        style: CLOCK_APM_STYLE,
+                    Offstage(
+                      offstage: widget.model.is24HourFormat,
+                      child: Container(
+                        padding: EdgeInsets.only(left: 5, bottom: 12),
+                        child: Text(
+                          "$amOrPm",
+                          style: CLOCK_AMORPM_STYLE,
+                        ),
                       ),
                     )
                   ],
@@ -100,7 +103,9 @@ class _SideDisplayState extends State<SideDisplay>
                     children: <Widget>[
                       Container(
                         padding: EdgeInsets.symmetric(horizontal: 5),
-                        child: WeatherIcon(),
+                        child: WeatherIcon(
+                          weather: widget.model.weatherCondition,
+                        ),
                       ),
                       Text(
                         "${widget.model.temperatureString}",
