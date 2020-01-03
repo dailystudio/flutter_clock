@@ -1,14 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:digital_clock/development/logger.dart';
 import 'package:digital_clock/widgets/matrix_painter.dart';
+import 'package:flutter_clock_helper/model.dart';
 
 class MatrixViewer extends StatefulWidget {
 
-  final String time;
+  final ClockModel model;
 
   MatrixViewer({
     Key key,
-    this.time,
+    this.model,
   }) : super(key: key);
 
   @override
@@ -54,7 +55,7 @@ class _MatrixViewerState extends State<MatrixViewer>
   Widget build(BuildContext context) {
     return CustomPaint(
       size: Size(double.infinity, double.infinity),
-      painter: MatrixPainter(widget.time, _count, _loop),
+      painter: MatrixPainter(_count, _loop),
     );
   }
 

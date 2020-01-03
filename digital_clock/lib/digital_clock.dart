@@ -21,14 +21,14 @@ enum _Element {
 
 final _lightTheme = {
   _Element.background: Colors.black,
-  _Element.text: Colors.deepOrange,
+  _Element.text: Colors.green,
   _Element.shadow: Colors.black,
 };
 
 final _darkTheme = {
-  _Element.background: Colors.black,
-  _Element.text: Color(0xffe2231a),
-  _Element.shadow: Color(0xFF174EA6),
+  _Element.background: Colors.white,
+  _Element.text: Colors.blue,
+  _Element.shadow: Colors.white,
 };
 
 /// A basic digital clock.
@@ -132,13 +132,6 @@ class _DigitalClockState extends State<DigitalClock> {
       constraints: BoxConstraints.expand(),
       child: Stack(
         children: <Widget>[
-           Container(
-              constraints: BoxConstraints.expand(),
-              decoration: BoxDecoration(
-                color: Colors.black
-              ),
-           ),
-
           Positioned(  //
             left: 0, right: 0, top: 0, bottom: 0,
             child: Image(
@@ -149,7 +142,7 @@ class _DigitalClockState extends State<DigitalClock> {
 
           Positioned(  //
             left: 0, right: 0, top: 0, bottom: 0,
-            child: MatrixViewer(time: "$hour:$minute"),
+            child: MatrixViewer(model: widget.model),
           ),
 
           Positioned(
@@ -164,22 +157,6 @@ class _DigitalClockState extends State<DigitalClock> {
               ),
             ),
           ),
-
-//          Row(
-//            children: <Widget>[
-//              Expanded(
-//                flex: 60,
-//                child: MatrixViewer(time: "$hour:$minute"),
-//              ),
-//              Expanded(
-//                flex: 40,
-//                child: SideDisplay(
-//                  dateTime: _dateTime,
-//                  model: widget.model,
-//                ),
-//              )
-//            ],
-//          )
         ],
       ),
     );

@@ -4,12 +4,11 @@ import 'package:digital_clock/core/text_stream.dart';
 
 class MatrixPainter extends CustomPainter {
 
-  String time;
   double _position = 0;
   static int _loop = 0;
   static List<TextStream> _textStreams = List();
 
-  MatrixPainter(this.time, double position, int loop) {
+  MatrixPainter(double position, int loop) {
     buildTextPainters();
 //    Logger.debug('pos: $position, loop: $loop [old: $_loop]');
     this._position = position;
