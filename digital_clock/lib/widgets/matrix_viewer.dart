@@ -1,11 +1,6 @@
-import 'dart:typed_data';
-import 'dart:ui' as ui;
-import 'dart:async';
-import 'package:path/path.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/services.dart' show ByteData, rootBundle;
 import 'package:digital_clock/development/logger.dart';
-import 'matrix_painter.dart';
+import 'package:digital_clock/widgets/matrix_painter.dart';
 
 class MatrixViewer extends StatefulWidget {
 

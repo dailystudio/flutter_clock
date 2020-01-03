@@ -1,6 +1,5 @@
 import 'package:digital_clock/widgets/widget_icon.dart';
 import 'package:intl/intl.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_clock_helper/model.dart';

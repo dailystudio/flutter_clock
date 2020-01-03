@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'dart:ui' as ui;
-import 'package:digital_clock/development/logger.dart';
 import 'package:digital_clock/common/constants.dart';
-import 'package:digital_clock/core/clock_digits.dart';
-import 'package:digital_clock/core/clock_face_painter.dart';
 import 'package:digital_clock/core/text_stream.dart';
 
 class MatrixPainter extends CustomPainter {
@@ -76,18 +72,11 @@ class MatrixPainter extends CustomPainter {
             dy + yOffset
         );
 
-//        if (_clockDigits.isInBoundaries(charOffset.dx, charOffset.dy)) {
-//          String ch = stream.text[i];
-//          tp = TEXT_PAINTERS["$ch.T4.${stream.fontSize}"];
-//        }
-
         if (tp != null) {
           tp.paint(canvas, charOffset);
           yOffset += tp.height;
         }
       }
-
-//      stream.textPainter.paint(canvas, offset);
     }
 
     for (TextStream s in useless) {

@@ -1,7 +1,5 @@
 import 'dart:math';
-
 import 'dart:ui';
-
 import 'package:digital_clock/development/logger.dart';
 import 'package:flutter/material.dart';
 

@@ -22,12 +22,4 @@ flutter:
   assets:
     - assets/images/
     - assets/images/weather/
-  fonts:
-    - family: SourceCodePro-Bold
-      fonts:
-        - asset: third_party/SourceCodePro-Bold.ttf
-    - family: CourierPrime-Bold
-      fonts:
-        - asset: third_party/CourierPrime-Bold.ttf
-
 
