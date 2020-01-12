@@ -1,3 +1,4 @@
+import 'package:digital_clock/development/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:digital_clock/common/constants.dart';
 
@@ -63,6 +64,7 @@ class TextStream {
       final TextPainter tp = TEXT_PAINTERS[key];
 //      Logger.debug('picking up key: $key, tp: $tp');
       if (tp == null) {
+        Logger.warn("text painter for [${text[i]}] does NOT exist");
         continue;
       }
 

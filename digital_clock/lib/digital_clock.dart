@@ -131,7 +131,10 @@ class _DigitalClockState extends State<DigitalClock> {
           ),
           Positioned(  //
             left: 0, right: 0, top: 0, bottom: 0,
-            child: MatrixViewer(model: widget.model),
+            child: MatrixViewer(
+                dateTime: _dateTime,
+                model: widget.model
+            ),
           ),
 
           Positioned(

@@ -1,30 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:digital_clock/common/constants.dart';
 import 'package:digital_clock/core/text_stream.dart';
+import 'package:digital_clock/development/logger.dart';
 
 class MatrixPainter extends CustomPainter {
 
-  double _position = 0;
-  static int _loop = 0;
+  static String _characters = CHARSET;
+  double _progress = 0;
   static List<TextStream> _textStreams = List();
 
-  MatrixPainter(double position, int loop) {
+  MatrixPainter(String characters, double progress) {
     buildTextPainters();
-//    Logger.debug('pos: $position, loop: $loop [old: $_loop]');
-    this._position = position;
+    this._progress = progress;
 
-    if (_loop != loop) {
+    if (_characters != characters) {
       _textStreams.clear();
     }
 
-    _loop = loop;
+    _characters = characters;
   }
 
   @override
   void paint(Canvas canvas, Size size) {
 //    canvas.drawColor(Colors.black, BlendMode.src);
 
-    if (_position.round() % STREAM_GENERATION_INTERVAL == 0) {
+    if (_progress.round() % STREAM_GENERATION_INTERVAL == 0) {
 //      TextStream ts = _clockDigits.randomCreateTextStream();
 //      if (ts == null) {
 //        ts = _generateNewStream(Rect.fromLTWH(0, 0, size.width, size.height));
@@ -105,7 +105,7 @@ class MatrixPainter extends CustomPainter {
 
     int id = DateTime.now().millisecondsSinceEpoch;
 
-    return TextStream("C$id", randomString(len), boundary);
+    return TextStream("C$id", randomString(len, charset: _characters), boundary);
   }
 
   @override
