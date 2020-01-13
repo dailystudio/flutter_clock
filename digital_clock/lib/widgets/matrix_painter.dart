@@ -5,12 +5,12 @@ import 'package:digital_clock/development/logger.dart';
 
 class MatrixPainter extends CustomPainter {
 
-  static String _characters = CHARSET;
+  static String _characters = Constants.charSets;
   double _progress = 0;
   static List<TextStream> _textStreams = List();
 
   MatrixPainter(String characters, double progress) {
-    buildTextPainters();
+    Constants.buildTextPainters();
     this._progress = progress;
 
     if (_characters != characters) {
@@ -22,15 +22,7 @@ class MatrixPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-//    canvas.drawColor(Colors.black, BlendMode.src);
-
-    if (_progress.round() % STREAM_GENERATION_INTERVAL == 0) {
-//      TextStream ts = _clockDigits.randomCreateTextStream();
-//      if (ts == null) {
-//        ts = _generateNewStream(Rect.fromLTWH(0, 0, size.width, size.height));
-//      }
-
-
+    if (_progress.round() % Configuration.streamGenerationInterval == 0) {
       var ts;
       ts = _generateNewStream(Rect.fromLTWH(0, 0, size.width, size.height));
       _textStreams.add(ts);
@@ -43,10 +35,6 @@ class MatrixPainter extends CustomPainter {
     List<TextStream> useless = List();
 
     for (TextStream stream in streams) {
-//      if (stream.id.startsWith("DS")) {
-//        stream.randomizeChars();
-//      }
-
       final dx = stream.baseOffset.dx;
       final dy = stream.baseOffset.dy + stream.yOffset;
 
@@ -60,8 +48,6 @@ class MatrixPainter extends CustomPainter {
 
         continue;
       }
-
-//      final offset = Offset(dx, dy);
 
       double yOffset = 0;
       for (int i = 0; i < stream.charsCount; i++) {
@@ -83,29 +69,15 @@ class MatrixPainter extends CustomPainter {
     }
   }
 
-  String _randomPickup(String old) {
-    String newString = old;
-    for (int i = 0; i < 3; i++) {
-      int position = randomSeed.nextInt(old.length);
-      int index = randomSeed.nextInt(CHARSET.length);
-      String char = CHARSET[index];
-
-      newString = _replaceCharAt(newString, position, char);
-    }
-    
-    return newString;
-  }
-
-  String _replaceCharAt(String oldString, int index, String newChar) {
-    return oldString.substring(0, index) + newChar + oldString.substring(index + 1);
-  }
-
   TextStream _generateNewStream(Rect boundary) {
-    int len = MIN_CHARACTERS + randomSeed.nextInt(MAX_CHARACTERS - MIN_CHARACTERS);
+    int len = Configuration.minCharacters
+        + Constants.randomSeed.nextInt(Configuration.maxCharacters - Configuration.minCharacters);
 
     int id = DateTime.now().millisecondsSinceEpoch;
 
-    return TextStream("C$id", randomString(len, charset: _characters), boundary);
+    return TextStream("C$id",
+        Constants.randomString(len, charset: _characters),
+        boundary);
   }
 
   @override

@@ -2,10 +2,6 @@ import 'package:digital_clock/development/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:digital_clock/common/constants.dart';
 
-const MAX_CHARACTERS = 40;
-const MIN_CHARACTERS = 16;
-const MAX_SPEED = 6;
-
 class TextStream {
 
   final String id;
@@ -16,7 +12,7 @@ class TextStream {
   Offset baseOffset;
   int yOffset = 0;
 
-  int fontSize = DEFAULT_FONT_SIZE;
+  int fontSize = Configuration.defaultFontSize;
   double baseScale = 1.0;
   double scaleDelta = 0;
 
@@ -33,18 +29,18 @@ class TextStream {
   void _configureStreamParameters(Rect boundary, {int speed = -1}) {
     this.charsCount = text.length;
 
-    this.baseScale = 0.5 + randomSeed.nextDouble() * 0.5;
+    this.baseScale = 0.5 + Constants.randomSeed.nextDouble() * 0.5;
 
-    this.speed = (speed == -1 ? (1 + randomSeed.nextInt(MAX_SPEED)) : speed);
-    this.fontSize = (DEFAULT_FONT_SIZE * this.baseScale).round();
+    this.speed = (speed == -1 ? (1 + Constants.randomSeed.nextInt(Configuration.maxStreamSpeed)) : speed);
+    this.fontSize = (Configuration.defaultFontSize * this.baseScale).round();
 
     _pickupPainters();
 
     this.size = _calculatePaintersSize();
 
     this.baseOffset = Offset(
-        boundary.left + randomSeed.nextInt(boundary.width.round()).toDouble(),
-        -size.height * (randomSeed.nextDouble() + 1)
+        boundary.left + Constants.randomSeed.nextInt(boundary.width.round()).toDouble(),
+        -size.height * (Constants.randomSeed.nextDouble() + 1)
     );
   }
 
@@ -53,18 +49,17 @@ class TextStream {
 
     String key;
     for (int i = 0; i < text.length; i++) {
-      if (i < LEADING_CHARACTERS) {
+      if (i < Configuration.leadingCharacters) {
         key = "${text[i]}.L$i.$fontSize";
-      } else if (i >= text.length - TAIL_CHARACTERS) {
-        key = "${text[i]}.T${TAIL_CHARACTERS - (text.length - i)}.$fontSize";
+      } else if (i >= text.length - Configuration.tailCharacters) {
+        key = "${text[i]}.T${Configuration.tailCharacters - (text.length - i)}.$fontSize";
       } else {
         key = "${text[i]}.B.$fontSize";
       }
 
-      final TextPainter tp = TEXT_PAINTERS[key];
-//      Logger.debug('picking up key: $key, tp: $tp');
+      final TextPainter tp = Constants.textPainters[key];
       if (tp == null) {
-        Logger.warn("text painter for [${text[i]}] does NOT exist");
+        Logger.warn("text painter for character [${text[i]}] does NOT exist.");
         continue;
       }
 
@@ -87,7 +82,7 @@ class TextStream {
   }
 
   void randomizeChars() {
-    text = randomString(charsCount);
+    text = Constants.randomString(charsCount);
 
     _pickupPainters();
   }

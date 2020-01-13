@@ -3,143 +3,151 @@ import 'dart:ui';
 import 'package:digital_clock/development/logger.dart';
 import 'package:flutter/material.dart';
 
-const CHARSET = '0123456789' +
-    '°C°F, .' +
-    'abcdefghijklmnopqrstuvwxyz' +
-    'ABCDEFGHIJKLMNOPQRSTUVWXYZ' +
+class Constants {
+
+  static final randomSeed = Random(DateTime.now().millisecondsSinceEpoch);
+
+  static final Map<String, TextPainter> textPainters = Map();
+  static bool _isPaintersBuilt = false;
+
+  static final charSets = '0123456789' +
+      '°C°F, .' +
+      'abcdefghijklmnopqrstuvwxyz' +
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZ' +
 //    '\u{30A0}\u{30A1}\u{30A2}\u{30A3}\u{30A4}\u{30A5}\u{30A6}\u{30A7}\u{30A8}\u{30A9}\u{30AA}\u{30AB}\u{30AC}\u{30AD}\u{30AE}\u{30AF}' +
 //    '\u{30B0}\u{30B1}\u{30B2}\u{30B3}\u{30B4}\u{30B5}\u{30B6}\u{30B7}\u{30B8}\u{30B9}\u{30BA}\u{30BB}\u{30BC}\u{30BD}\u{30BE}\u{30BF}' +
 //    '\u{30C0}\u{30C1}\u{30C2}\u{30C3}\u{30C4}\u{30C5}\u{30C6}\u{30C7}\u{30C8}\u{30C9}\u{30CA}\u{30CB}\u{30CC}\u{30CD}\u{30CE}\u{30CF}' +
 //    '\u{30D0}\u{30D1}\u{30D2}\u{30D3}\u{30D4}\u{30D5}\u{30D6}\u{30D7}\u{30D8}\u{30D9}\u{30DA}\u{30DB}\u{30DC}\u{30DD}\u{30DE}\u{30DF}' +
 //    '\u{30E0}\u{30E1}\u{30E2}\u{30E3}\u{30E4}\u{30E5}\u{30E6}\u{30E7}\u{30E8}\u{30E9}\u{30EA}\u{30EB}\u{30EC}\u{30ED}\u{30EE}\u{30EF}' +
 //    '\u{30F0}\u{30F1}\u{30F2}\u{30F3}\u{30F4}\u{30F5}\u{30F6}\u{30F7}\u{30F8}\u{30F9}\u{30FA}\u{30FB}\u{30FC}\u{30FD}\u{30FE}\u{30FF}' +
-    '';
-
-const TEXT_STYLE = TextStyle(
-    color: Colors.green,
-    height: 1
-);
+      '';
 
 
-const int DEFAULT_FONT_SIZE = 15;
-const LEADING_CHARACTERS = 5;
-const TAIL_CHARACTERS = 5;
+  static final _defaultTextStyle = TextStyle(
+      color: Colors.green,
+      height: 1
+  );
 
-const STREAM_GENERATION_INTERVAL = 4;
+  static TextPainter _createPainter(String text, Color color, int fontSize) {
+    final textStyle = _defaultTextStyle.copyWith(
+        color: color,
+        fontSize: fontSize.toDouble()
+    );
 
-final List<GradientColor> LEADING_GRADIENT_COLORS = List()
-  ..add(GradientColor(Colors.black.withAlpha(0), 0))
-  ..add(GradientColor(Colors.green, 1));
-final List<GradientColor> TAIL_GRADIENT_COLORS = List()
-  ..add(GradientColor(Colors.green, 0))
-  ..add(GradientColor(Colors.white, 1));
+    final textSpan = TextSpan(
+      text: text,
+      style: textStyle,
+    );
 
+    final painter = TextPainter(
+      text: textSpan,
+      textDirection: TextDirection.ltr,
+    );
 
-final randomSeed = Random(DateTime.now().millisecondsSinceEpoch);
+    painter.layout();
 
-final Map<String, TextPainter> TEXT_PAINTERS = Map();
-bool _isPaintersBuilt = false;
-
-void buildTextPainters() {
-  if (_isPaintersBuilt) {
-    return;
+    return painter;
   }
 
-  final start = DateTime.now().millisecondsSinceEpoch;
-  Logger.debug('build text painters...');
-
-  List<Color> leadingColors = calculateGradientColors(
-      LEADING_CHARACTERS, LEADING_GRADIENT_COLORS);
-  List<Color> tailColors = calculateGradientColors(
-      TAIL_CHARACTERS, TAIL_GRADIENT_COLORS);
-
-  for (int cIndex = 0; cIndex < CHARSET.length; cIndex++) {
-    for (int fontSize = 1; fontSize <= DEFAULT_FONT_SIZE; fontSize++) {
-      for (int lIndex = 0; lIndex < LEADING_CHARACTERS; lIndex++) {
-        String key = "${CHARSET[cIndex]}.L$lIndex.$fontSize";
-//        Logger.debug('generating painter for: $key, color: ${leadingColors[lIndex]}');
-
-        TEXT_PAINTERS[key] = _createPainter(
-            CHARSET[cIndex], leadingColors[lIndex], fontSize);
-      }
-
-      for (int tIndex = 0; tIndex < TAIL_CHARACTERS; tIndex++) {
-        String key = "${CHARSET[cIndex]}.T$tIndex.$fontSize";
-//        Logger.debug('generating painter for: $key, color: ${tailColors[tIndex]}');
-
-        TEXT_PAINTERS[key] = _createPainter(
-            CHARSET[cIndex], tailColors[tIndex], fontSize);
-      }
-
-      String key = "${CHARSET[cIndex]}.B.$fontSize";
-//      Logger.debug('generating painter for: $key');
-
-      TEXT_PAINTERS[key] = _createPainter(
-          CHARSET[cIndex], Colors.green, fontSize);
+  static void buildTextPainters() {
+    if (_isPaintersBuilt) {
+      return;
     }
+
+    final start = DateTime.now().millisecondsSinceEpoch;
+    Logger.debug('building text painters...');
+
+    List<Color> leadingColors = calculateGradientColors(
+        Configuration.leadingCharacters, Configuration.LEADING_GRADIENT_COLORS);
+    List<Color> tailColors = calculateGradientColors(
+        Configuration.tailCharacters, Configuration.TAIL_GRADIENT_COLORS);
+
+    for (int cIndex = 0; cIndex < charSets.length; cIndex++) {
+      for (int fontSize = 1; fontSize <= Configuration.defaultFontSize; fontSize++) {
+        for (int lIndex = 0; lIndex < Configuration.leadingCharacters; lIndex++) {
+          String key = "${charSets[cIndex]}.L$lIndex.$fontSize";
+
+          textPainters[key] = _createPainter(
+              charSets[cIndex], leadingColors[lIndex], fontSize);
+        }
+
+        for (int tIndex = 0; tIndex < Configuration.tailCharacters; tIndex++) {
+          String key = "${charSets[cIndex]}.T$tIndex.$fontSize";
+
+          textPainters[key] = _createPainter(
+              charSets[cIndex], tailColors[tIndex], fontSize);
+        }
+
+        String key = "${charSets[cIndex]}.B.$fontSize";
+
+        textPainters[key] = _createPainter(
+            charSets[cIndex], Colors.green, fontSize);
+      }
+    }
+
+    final end = DateTime.now().millisecondsSinceEpoch;
+    Logger.debug('building text painters is accomplished in ${end - start} millis.');
+
+    _isPaintersBuilt = true;
   }
 
-  final end = DateTime.now().millisecondsSinceEpoch;
-  Logger.debug('build text painters is accomplished in ${end - start} millis.');
+  static String randomString(int len, {charset}) {
+    String result = "";
 
-  _isPaintersBuilt = true;
-}
+    if (charset == null) {
+      charset = charSets;
+    }
 
-TextPainter _createPainter(String text, Color color, int fontSize) {
-  final textStyle = TextStyle(
-      color: color,
-      fontSize: fontSize.toDouble()
-  );
+    for (int i = 0; i < len; i++) {
+      int index = randomSeed.nextInt(charset.length);
+      result += charset[index];
+    }
 
-  final textSpan = TextSpan(
-    text: text,
-    style: textStyle,
-  );
-
-  final painter = TextPainter(
-    text: textSpan,
-    textDirection: TextDirection.ltr,
-  );
-
-  painter.layout();
-
-  return painter;
-}
-
-String randomString(int len, {charset}) {
-  String result = "";
-
-  if (charset == null) {
-    charset = CHARSET;
+    return result;
   }
 
-  for (int i = 0; i < len; i++) {
-    int index = randomSeed.nextInt(charset.length);
-    result += charset[index];
+  Size measureChars(String chars, TextStyle textStyle) {
+    final singleCharTextSpan = TextSpan(
+      text: chars,
+      style: textStyle,
+    );
+
+    final painter = TextPainter(
+        text: singleCharTextSpan,
+        textDirection:  TextDirection.ltr,
+        textAlign: TextAlign.center
+    );
+
+    painter.layout(
+      minWidth: 0,
+      maxWidth: 0,
+    );
+
+    return Size(painter.minIntrinsicWidth, painter.height);
   }
 
-  return result;
 }
 
-Size measureChars(String chars, TextStyle textStyle) {
-  final singleCharTextSpan = TextSpan(
-    text: chars,
-    style: textStyle,
-  );
+class Configuration {
+  static final int defaultFontSize = 15;
 
-  final painter = TextPainter(
-      text: singleCharTextSpan,
-      textDirection:  TextDirection.ltr,
-      textAlign: TextAlign.center
-  );
+  static final leadingCharacters = 5;
+  static final tailCharacters = 5;
+  static final maxCharacters = 40;
+  static final minCharacters = 16;
 
-  painter.layout(
-    minWidth: 0,
-    maxWidth: 0,
-  );
+  static final streamGenerationInterval = 4;
+  static final maxStreamSpeed = 6;
 
-  return Size(painter.minIntrinsicWidth, painter.height);
+  static final List<GradientColor> LEADING_GRADIENT_COLORS = List()
+    ..add(GradientColor(Colors.black.withAlpha(0), 0))
+    ..add(GradientColor(Colors.green, 1));
+  static final List<GradientColor> TAIL_GRADIENT_COLORS = List()
+    ..add(GradientColor(Colors.green, 0))
+    ..add(GradientColor(Colors.white, 1));
+
 }
+
 
 class GradientColor {
 
