@@ -53,8 +53,7 @@ class _SideDisplayState extends State<SideDisplay>
     return Container(
       decoration: BoxDecoration(
         color: Color(0xFF000910).withAlpha(220)
-//        color: Colors.black
-          ),
+      ),
       child: Stack(
         alignment: Alignment.center,
         children: <Widget>[

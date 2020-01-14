@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:digital_clock/development/logger.dart';
 import 'package:digital_clock/widgets/matrix_painter.dart';
 import 'package:flutter_clock_helper/model.dart';
 import 'package:intl/intl.dart';

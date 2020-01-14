@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:digital_clock/common/constants.dart';
 import 'package:digital_clock/core/text_stream.dart';
-import 'package:digital_clock/development/logger.dart';
 
 class MatrixPainter extends CustomPainter {
 
