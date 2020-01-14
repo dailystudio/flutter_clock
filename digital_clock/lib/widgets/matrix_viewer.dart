@@ -4,7 +4,6 @@ import 'package:flutter_clock_helper/model.dart';
 import 'package:intl/intl.dart';
 
 class MatrixViewer extends StatefulWidget {
-
   final DateTime dateTime;
   final ClockModel model;
 
@@ -20,7 +19,6 @@ class MatrixViewer extends StatefulWidget {
 
 class _MatrixViewerState extends State<MatrixViewer>
     with SingleTickerProviderStateMixin {
-
   double _progress = 0;
   Animation<double> _animation;
   AnimationController controller;
@@ -55,10 +53,11 @@ class _MatrixViewerState extends State<MatrixViewer>
     final dateTime = widget.dateTime;
 
     final hour =
-      DateFormat(widget.model.is24HourFormat ? 'HH' : 'hh').format(dateTime);
+        DateFormat(widget.model.is24HourFormat ? 'HH' : 'hh').format(dateTime);
     final minute = DateFormat('mm').format(dateTime);
     final date = DateFormat('MMMM d, yyyy').format(dateTime);
-    final amOrPm = (widget.model.is24HourFormat ? "" : DateFormat('aaa').format(dateTime));
+    final amOrPm =
+        (widget.model.is24HourFormat ? "" : DateFormat('aaa').format(dateTime));
 
     String characters =
         '$date$hour$minute$amOrPm${widget.model.location}${widget.model.temperatureString}${widget.model.weatherCondition}';
@@ -73,5 +72,4 @@ class _MatrixViewerState extends State<MatrixViewer>
     controller.dispose();
     super.dispose();
   }
-
 }

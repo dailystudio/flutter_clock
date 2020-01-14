@@ -89,34 +89,31 @@ class _DigitalClockState extends State<DigitalClock> {
         children: <Widget>[
           Container(
             constraints: BoxConstraints.expand(),
-            decoration: BoxDecoration(
-              color: Colors.black
-            ),
+            decoration: BoxDecoration(color: Colors.black),
           ),
-          Positioned(  //
+          Positioned(
+            //
             left: 0, right: 0, top: 0, bottom: 0,
             child: Opacity(
               opacity: .2,
               child: Image(
                 image: AssetImage('assets/images/background.jpg'),
-                fit : BoxFit.cover,
+                fit: BoxFit.cover,
               ),
             ),
           ),
-          Positioned(  //
-            left: 0, right: 0, top: 0, bottom: 0,
-            child: MatrixViewer(
-                dateTime: _dateTime,
-                model: widget.model
-            ),
-          ),
-
           Positioned(
-            right: 0, top: 0, bottom: 0,
-            child: Container(  //
-              constraints: BoxConstraints.expand(
-                width: 230
-              ),
+            //
+            left: 0, right: 0, top: 0, bottom: 0,
+            child: MatrixViewer(dateTime: _dateTime, model: widget.model),
+          ),
+          Positioned(
+            right: 0,
+            top: 0,
+            bottom: 0,
+            child: Container(
+              //
+              constraints: BoxConstraints.expand(width: 230),
               child: SideDisplay(
                 dateTime: _dateTime,
                 model: widget.model,

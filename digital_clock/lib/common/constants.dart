@@ -5,7 +5,6 @@ import 'package:digital_clock/development/logger.dart';
 import 'package:flutter/material.dart';
 
 class Constants {
-
   static final randomSeed = Random(DateTime.now().millisecondsSinceEpoch);
 
   static final Map<String, TextPainter> textPainters = Map();
@@ -23,17 +22,11 @@ class Constants {
 //    '\u{30F0}\u{30F1}\u{30F2}\u{30F3}\u{30F4}\u{30F5}\u{30F6}\u{30F7}\u{30F8}\u{30F9}\u{30FA}\u{30FB}\u{30FC}\u{30FD}\u{30FE}\u{30FF}' +
       '';
 
-
-  static final _defaultTextStyle = TextStyle(
-      color: Colors.green,
-      height: 1
-  );
+  static final _defaultTextStyle = TextStyle(color: Colors.green, height: 1);
 
   static TextPainter _createPainter(String text, Color color, int fontSize) {
-    final textStyle = _defaultTextStyle.copyWith(
-        color: color,
-        fontSize: fontSize.toDouble()
-    );
+    final textStyle =
+        _defaultTextStyle.copyWith(color: color, fontSize: fontSize.toDouble());
 
     final textSpan = TextSpan(
       text: text,
@@ -64,30 +57,35 @@ class Constants {
         Configuration.tailCharacters, Configuration.tailGradientColors);
 
     for (int cIndex = 0; cIndex < charSets.length; cIndex++) {
-      for (int fontSize = 1; fontSize <= Configuration.defaultFontSize; fontSize++) {
-        for (int lIndex = 0; lIndex < Configuration.leadingCharacters; lIndex++) {
+      for (int fontSize = 1;
+          fontSize <= Configuration.defaultFontSize;
+          fontSize++) {
+        for (int lIndex = 0;
+            lIndex < Configuration.leadingCharacters;
+            lIndex++) {
           String key = "${charSets[cIndex]}.L$lIndex.$fontSize";
 
-          textPainters[key] = _createPainter(
-              charSets[cIndex], leadingColors[lIndex], fontSize);
+          textPainters[key] =
+              _createPainter(charSets[cIndex], leadingColors[lIndex], fontSize);
         }
 
         for (int tIndex = 0; tIndex < Configuration.tailCharacters; tIndex++) {
           String key = "${charSets[cIndex]}.T$tIndex.$fontSize";
 
-          textPainters[key] = _createPainter(
-              charSets[cIndex], tailColors[tIndex], fontSize);
+          textPainters[key] =
+              _createPainter(charSets[cIndex], tailColors[tIndex], fontSize);
         }
 
         String key = "${charSets[cIndex]}.B.$fontSize";
 
-        textPainters[key] = _createPainter(
-            charSets[cIndex], Colors.green, fontSize);
+        textPainters[key] =
+            _createPainter(charSets[cIndex], Colors.green, fontSize);
       }
     }
 
     final end = DateTime.now().millisecondsSinceEpoch;
-    Logger.debug('building text painters is accomplished in ${end - start} millis.');
+    Logger.debug(
+        'building text painters is accomplished in ${end - start} millis.');
 
     _isPaintersBuilt = true;
   }
@@ -115,9 +113,8 @@ class Constants {
 
     final painter = TextPainter(
         text: singleCharTextSpan,
-        textDirection:  TextDirection.ltr,
-        textAlign: TextAlign.center
-    );
+        textDirection: TextDirection.ltr,
+        textAlign: TextAlign.center);
 
     painter.layout(
       minWidth: 0,
@@ -126,7 +123,6 @@ class Constants {
 
     return Size(painter.minIntrinsicWidth, painter.height);
   }
-
 }
 
 class Configuration {
@@ -146,5 +142,4 @@ class Configuration {
   static final List<GradientColor> tailGradientColors = List()
     ..add(GradientColor(Colors.green, 0))
     ..add(GradientColor(Colors.white, 1));
-
 }

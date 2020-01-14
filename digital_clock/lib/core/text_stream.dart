@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:digital_clock/common/constants.dart';
 
 class TextStream {
-
   final String id;
   String text;
   int charsCount;
@@ -31,7 +30,9 @@ class TextStream {
 
     this.baseScale = 0.5 + Constants.randomSeed.nextDouble() * 0.5;
 
-    this.speed = (speed == -1 ? (1 + Constants.randomSeed.nextInt(Configuration.maxStreamSpeed)) : speed);
+    this.speed = (speed == -1
+        ? (1 + Constants.randomSeed.nextInt(Configuration.maxStreamSpeed))
+        : speed);
     this.fontSize = (Configuration.defaultFontSize * this.baseScale).round();
 
     _pickupPainters();
@@ -39,9 +40,9 @@ class TextStream {
     this.size = _calculatePaintersSize();
 
     this.baseOffset = Offset(
-        boundary.left + Constants.randomSeed.nextInt(boundary.width.round()).toDouble(),
-        -size.height * (Constants.randomSeed.nextDouble() + 1)
-    );
+        boundary.left +
+            Constants.randomSeed.nextInt(boundary.width.round()).toDouble(),
+        -size.height * (Constants.randomSeed.nextDouble() + 1));
   }
 
   void _pickupPainters() {
@@ -52,7 +53,8 @@ class TextStream {
       if (i < Configuration.leadingCharacters) {
         key = "${text[i]}.L$i.$fontSize";
       } else if (i >= text.length - Configuration.tailCharacters) {
-        key = "${text[i]}.T${Configuration.tailCharacters - (text.length - i)}.$fontSize";
+        key =
+            "${text[i]}.T${Configuration.tailCharacters - (text.length - i)}.$fontSize";
       } else {
         key = "${text[i]}.B.$fontSize";
       }
@@ -81,5 +83,4 @@ class TextStream {
 
     return Size(width, height);
   }
-
 }

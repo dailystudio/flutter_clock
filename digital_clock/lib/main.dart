@@ -38,7 +38,7 @@ void main() {
     DeviceOrientation.landscapeLeft,
     DeviceOrientation.landscapeRight,
   ]).then((_) {
-    SystemChrome.setEnabledSystemUIOverlays([]).then((_){
+    SystemChrome.setEnabledSystemUIOverlays([]).then((_) {
       runApp(ClockCustomizer((ClockModel model) => DigitalClock(model)));
     });
   });

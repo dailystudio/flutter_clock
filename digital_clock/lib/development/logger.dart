@@ -6,7 +6,6 @@ enum _LogToken {
 }
 
 class Logger {
-
   static var _debugEnabled = false;
 
   static void setDebugEnabled(bool enabled) {
@@ -38,5 +37,4 @@ class Logger {
   static String _tokenToString(_LogToken token) {
     return token.toString().split('.')[1];
   }
-
 }

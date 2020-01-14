@@ -51,77 +51,72 @@ class _SideDisplayState extends State<SideDisplay>
     final amOrPm = DateFormat('aaa').format(dateTime);
 
     return Container(
-      decoration: BoxDecoration(
-        color: Color(0xFF000910).withAlpha(220)
-      ),
-      child: Stack(
-        alignment: Alignment.center,
-        children: <Widget>[
-          Positioned(
-            top: 0,
+      decoration: BoxDecoration(color: Color(0xFF000910).withAlpha(220)),
+      child: Stack(alignment: Alignment.center, children: <Widget>[
+        Positioned(
+          top: 0,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: <Widget>[
+                  Text(
+                    "$hour:$minute",
+                    style: CLOCK_TIME_STYLE,
+                  ),
+                  Offstage(
+                    offstage: widget.model.is24HourFormat,
+                    child: Container(
+                      padding: EdgeInsets.only(left: 5, bottom: 12),
+                      child: Text(
+                        "$amOrPm",
+                        style: CLOCK_AMORPM_STYLE,
+                      ),
+                    ),
+                  )
+                ],
+              ),
+              Text(
+                "$date",
+                style: CLOCK_DATE_STYLE,
+              ),
+            ],
+          ),
+        ),
+        Positioned(
+          bottom: 0,
+          right: 0,
+          child: Container(
+            padding: EdgeInsets.all(15),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    Text(
-                      "$hour:$minute",
-                      style: CLOCK_TIME_STYLE,
-                    ),
-                    Offstage(
-                      offstage: widget.model.is24HourFormat,
-                      child: Container(
-                        padding: EdgeInsets.only(left: 5, bottom: 12),
-                        child: Text(
-                          "$amOrPm",
-                          style: CLOCK_AMORPM_STYLE,
-                        ),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 5),
+                      child: WeatherIcon(
+                        weather: widget.model.weatherCondition,
                       ),
-                    )
+                    ),
+                    Text(
+                      "${widget.model.temperatureString}",
+                      style: CLOCK_DATE_STYLE,
+                    ),
                   ],
                 ),
                 Text(
-                  "$date",
+                  "${widget.model.location}",
                   style: CLOCK_DATE_STYLE,
                 ),
               ],
             ),
           ),
-          Positioned(
-            bottom: 0,
-            right: 0,
-            child: Container(
-              padding: EdgeInsets.all(15),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: <Widget>[
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 5),
-                        child: WeatherIcon(
-                          weather: widget.model.weatherCondition,
-                        ),
-                      ),
-                      Text(
-                        "${widget.model.temperatureString}",
-                        style: CLOCK_DATE_STYLE,
-                      ),
-                    ],
-                  ),
-                  Text(
-                    "${widget.model.location}",
-                    style: CLOCK_DATE_STYLE,
-                  ),
-                ],
-              ),
-            ),
-          )
-        ]
-      ),
+        )
+      ]),
     );
   }
 }

@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 
 class GradientColor {
-
   final Color color;
   final double percentage;
 
   GradientColor(this.color, this.percentage);
-
 }
 
 List<Color> calculateGradientColors(int len, List<GradientColor> targetColors) {
@@ -24,7 +22,8 @@ List<Color> calculateGradientColors(int len, List<GradientColor> targetColors) {
 
     int count = ((to.percentage - from.percentage) * len).ceil();
     for (int j = 0; j < count; j++) {
-      Color color = getGradientColor(from.color, to.color, (j / count.toDouble()));
+      Color color =
+          getGradientColor(from.color, to.color, (j / count.toDouble()));
 
       outputColors.add(color);
     }
@@ -39,9 +38,9 @@ List<Color> calculateGradientColors(int len, List<GradientColor> targetColors) {
   return outputColors;
 }
 
-
 Color getGradientColor(Color from, Color to, double percentage) {
-  return Color.fromARGB(from.alpha + ((to.alpha - from.alpha) * percentage).round(),
+  return Color.fromARGB(
+      from.alpha + ((to.alpha - from.alpha) * percentage).round(),
       from.red + ((to.red - from.red) * percentage).round(),
       from.green + ((to.green - from.green) * percentage).round(),
       from.blue + ((to.blue - from.blue) * percentage).round());
@@ -51,16 +50,12 @@ GradientColor _getFromGradientColor(int index, List<GradientColor> colors) {
   return _getGradientColor(index, colors, Colors.green, 0);
 }
 
-
 GradientColor _getToGradientColor(int index, List<GradientColor> colors) {
   return _getGradientColor(index, colors, Colors.black, 1);
 }
 
-
-GradientColor _getGradientColor(int index,
-    List<GradientColor> colors,
-    Color fallbackColor,
-    double fallbackPercentage) {
+GradientColor _getGradientColor(int index, List<GradientColor> colors,
+    Color fallbackColor, double fallbackPercentage) {
   if (index < 0 || index >= colors.length) {
     return GradientColor(fallbackColor, fallbackPercentage);
   }

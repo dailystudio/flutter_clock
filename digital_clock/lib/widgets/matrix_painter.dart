@@ -3,7 +3,6 @@ import 'package:digital_clock/common/constants.dart';
 import 'package:digital_clock/core/text_stream.dart';
 
 class MatrixPainter extends CustomPainter {
-
   static String _characters = Constants.charSets;
   double _progress = 0;
   static List<TextStream> _textStreams = List();
@@ -40,7 +39,7 @@ class MatrixPainter extends CustomPainter {
       stream.yOffset += stream.speed;
       stream.scaleDelta += 0.001;
 
-      if (dy < -stream.size.height || dy  > size.height) {
+      if (dy < -stream.size.height || dy > size.height) {
         if (dy > size.height) {
           useless.add(stream);
         }
@@ -51,10 +50,7 @@ class MatrixPainter extends CustomPainter {
       double yOffset = 0;
       for (int i = 0; i < stream.charsCount; i++) {
         TextPainter tp = stream.streamPainters[i];
-        final charOffset = Offset(
-            dx,
-            dy + yOffset
-        );
+        final charOffset = Offset(dx, dy + yOffset);
 
         if (tp != null) {
           tp.paint(canvas, charOffset);
@@ -69,12 +65,14 @@ class MatrixPainter extends CustomPainter {
   }
 
   TextStream _generateNewStream(Rect boundary) {
-    int len = Configuration.minCharacters
-        + Constants.randomSeed.nextInt(Configuration.maxCharacters - Configuration.minCharacters);
+    int len = Configuration.minCharacters +
+        Constants.randomSeed
+            .nextInt(Configuration.maxCharacters - Configuration.minCharacters);
 
     int id = DateTime.now().millisecondsSinceEpoch;
 
-    return TextStream("C$id",
+    return TextStream(
+        "C$id",
 //        Constants.randomString(len, charset: _characters),
         Constants.randomString(len),
         boundary);
@@ -84,5 +82,4 @@ class MatrixPainter extends CustomPainter {
   bool shouldRepaint(CustomPainter oldDelegate) {
     return true;
   }
-
 }
