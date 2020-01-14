@@ -12,7 +12,7 @@ class Constants {
   static bool _isPaintersBuilt = false;
 
   static final charSets = '0123456789' +
-      '°C°F, .' +
+      '°C°F, .-' +
       'abcdefghijklmnopqrstuvwxyz' +
       'ABCDEFGHIJKLMNOPQRSTUVWXYZ' +
 //    '\u{30A0}\u{30A1}\u{30A2}\u{30A3}\u{30A4}\u{30A5}\u{30A6}\u{30A7}\u{30A8}\u{30A9}\u{30AA}\u{30AB}\u{30AC}\u{30AD}\u{30AE}\u{30AF}' +

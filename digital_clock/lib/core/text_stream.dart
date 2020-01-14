@@ -57,9 +57,10 @@ class TextStream {
         key = "${text[i]}.B.$fontSize";
       }
 
-      final TextPainter tp = Constants.textPainters[key];
+      TextPainter tp = Constants.textPainters[key];
       if (tp == null) {
         Logger.warn("text painter for character [${text[i]}] does NOT exist.");
+
         continue;
       }
 
@@ -79,12 +80,6 @@ class TextStream {
     }
 
     return Size(width, height);
-  }
-
-  void randomizeChars() {
-    text = Constants.randomString(charsCount);
-
-    _pickupPainters();
   }
 
 }

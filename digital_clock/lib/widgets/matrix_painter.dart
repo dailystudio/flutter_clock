@@ -75,7 +75,8 @@ class MatrixPainter extends CustomPainter {
     int id = DateTime.now().millisecondsSinceEpoch;
 
     return TextStream("C$id",
-        Constants.randomString(len, charset: _characters),
+//        Constants.randomString(len, charset: _characters),
+        Constants.randomString(len),
         boundary);
   }
 
