@@ -9,31 +9,9 @@ import 'package:digital_clock/widgets/side_display.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_clock_helper/model.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 import 'development/logger.dart';
 
-enum _Element {
-  background,
-  text,
-  shadow,
-}
-
-final _lightTheme = {
-  _Element.background: Colors.black,
-  _Element.text: Colors.green,
-  _Element.shadow: Colors.black,
-};
-
-final _darkTheme = {
-  _Element.background: Colors.white,
-  _Element.text: Colors.blue,
-  _Element.shadow: Colors.white,
-};
-
-/// A basic digital clock.
-///
-/// You can do better than this!
 class DigitalClock extends StatefulWidget {
   const DigitalClock(this.model);
 
@@ -105,10 +83,6 @@ class _DigitalClockState extends State<DigitalClock> {
 
   @override
   Widget build(BuildContext context) {
-    final colors = Theme.of(context).brightness == Brightness.light
-        ? _lightTheme
-        : _darkTheme;
-
     return Container(
       constraints: BoxConstraints.expand(),
       child: Stack(
