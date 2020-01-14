@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'dart:ui';
+import 'package:digital_clock/core/gradient_color.dart';
 import 'package:digital_clock/development/logger.dart';
 import 'package:flutter/material.dart';
 
@@ -58,9 +59,9 @@ class Constants {
     Logger.debug('building text painters...');
 
     List<Color> leadingColors = calculateGradientColors(
-        Configuration.leadingCharacters, Configuration.LEADING_GRADIENT_COLORS);
+        Configuration.leadingCharacters, Configuration.leadingGradientColors);
     List<Color> tailColors = calculateGradientColors(
-        Configuration.tailCharacters, Configuration.TAIL_GRADIENT_COLORS);
+        Configuration.tailCharacters, Configuration.tailGradientColors);
 
     for (int cIndex = 0; cIndex < charSets.length; cIndex++) {
       for (int fontSize = 1; fontSize <= Configuration.defaultFontSize; fontSize++) {
@@ -139,80 +140,11 @@ class Configuration {
   static final streamGenerationInterval = 4;
   static final maxStreamSpeed = 6;
 
-  static final List<GradientColor> LEADING_GRADIENT_COLORS = List()
+  static final List<GradientColor> leadingGradientColors = List()
     ..add(GradientColor(Colors.black.withAlpha(0), 0))
     ..add(GradientColor(Colors.green, 1));
-  static final List<GradientColor> TAIL_GRADIENT_COLORS = List()
+  static final List<GradientColor> tailGradientColors = List()
     ..add(GradientColor(Colors.green, 0))
     ..add(GradientColor(Colors.white, 1));
 
-}
-
-
-class GradientColor {
-
-  final Color color;
-  final double percentage;
-
-  GradientColor(this.color, this.percentage);
-
-}
-
-List<Color> calculateGradientColors(int len, List<GradientColor> targetColors) {
-  List<Color> outputColors = List();
-
-  if (len <= 0 || targetColors.length <= 0) {
-    return outputColors;
-  }
-
-  GradientColor from;
-  GradientColor to;
-  for (int i = 0; i < targetColors.length - 1; i++) {
-    from = _getFromGradientColor(i, targetColors);
-    to = _getToGradientColor(i + 1, targetColors);
-
-    int count = ((to.percentage - from.percentage) * len).ceil();
-    for (int j = 0; j < count; j++) {
-      Color color = getGradientColor(from.color, to.color, (j / count.toDouble()));
-
-      outputColors.add(color);
-    }
-  }
-
-  if (outputColors.length < len) {
-    for (int i; i < (len - outputColors.length); i++) {
-      outputColors.add(to.color);
-    }
-  }
-
-  return outputColors;
-}
-
-
-Color getGradientColor(Color from, Color to, double percentage) {
-  return Color.fromARGB(from.alpha + ((to.alpha - from.alpha) * percentage).round(),
-      from.red + ((to.red - from.red) * percentage).round(),
-      from.green + ((to.green - from.green) * percentage).round(),
-      from.blue + ((to.blue - from.blue) * percentage).round());
-}
-
-GradientColor _getFromGradientColor(int index, List<GradientColor> colors) {
-  return _getGradientColor(index, colors, Colors.green, 0);
-}
-
-
-GradientColor _getToGradientColor(int index, List<GradientColor> colors) {
-  return _getGradientColor(index, colors, Colors.black, 1);
-}
-
-
-GradientColor _getGradientColor(int index,
-    List<GradientColor> colors,
-    Color fallbackColor,
-    double fallbackPercentage) {
-  if (index < 0 || index >= colors.length) {
-    return GradientColor(fallbackColor, fallbackPercentage);
-  }
-
-  return colors[index];
 }

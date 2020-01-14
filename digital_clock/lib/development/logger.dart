@@ -9,7 +9,6 @@ class Logger {
 
   static var _debugEnabled = false;
 
-
   static void setDebugEnabled(bool enabled) {
     _debugEnabled = enabled;
   }
