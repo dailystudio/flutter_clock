@@ -1,3 +1,5 @@
+import 'package:digital_clock/widgets/qrcode_painter.dart';
+import 'package:digital_clock/widgets/qrcode_presenter.dart';
 import 'package:digital_clock/widgets/widget_icon.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
@@ -93,6 +95,13 @@ class _SideDisplayState extends State<SideDisplay>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
+                Container(
+                  padding: EdgeInsets.only(bottom: 20, right:10),
+                  child: QRCodePresenter(
+                    model: widget.model,
+                  ),
+                ),
+
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
