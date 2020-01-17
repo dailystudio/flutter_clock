@@ -4,6 +4,7 @@
 
 import 'dart:async';
 
+import 'package:digital_clock/widgets/image_viewer.dart';
 import 'package:digital_clock/widgets/matrix_viewer.dart';
 import 'package:digital_clock/widgets/side_display.dart';
 import 'package:flutter/foundation.dart';
@@ -92,13 +93,24 @@ class _DigitalClockState extends State<DigitalClock> {
             decoration: BoxDecoration(color: Colors.black),
           ),
           Positioned(
-            //
             left: 0, right: 0, top: 0, bottom: 0,
             child: Opacity(
-              opacity: .2,
+              opacity: .0,
               child: Image(
                 image: AssetImage('assets/images/background.jpg'),
                 fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          Positioned(
+            left: 0, top: 0,
+            right: 0, bottom: 0,
+            child: Opacity(
+              opacity: .3,
+              child: Container(
+                child: ImageViewer(
+                  imageFile: "assets/images/horoscope/capricorn.png",
+                ),
               ),
             ),
           ),

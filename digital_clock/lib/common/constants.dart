@@ -58,7 +58,7 @@ class Constants {
 
     for (int cIndex = 0; cIndex < charSets.length; cIndex++) {
       for (int fontSize = 1;
-          fontSize <= Configuration.defaultFontSize;
+          fontSize <= Configuration.maxFontSize;
           fontSize++) {
         for (int lIndex = 0;
             lIndex < Configuration.leadingCharacters;
@@ -126,14 +126,15 @@ class Constants {
 }
 
 class Configuration {
-  static final int defaultFontSize = 15;
+  static final int defaultFontSize = 28;
+  static final int maxFontSize = 30;
 
   static final leadingCharacters = 5;
   static final tailCharacters = 5;
-  static final maxCharacters = 40;
-  static final minCharacters = 16;
+  static final maxCharacters = 30;
+  static final minCharacters = 12;
 
-  static final streamGenerationInterval = 4;
+  static final streamGenerationInterval = 5;
   static final maxStreamSpeed = 6;
 
   static final List<GradientColor> leadingGradientColors = List()
