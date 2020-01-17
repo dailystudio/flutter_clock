@@ -4,7 +4,7 @@
 
 import 'dart:async';
 
-import 'package:digital_clock/widgets/image_viewer.dart';
+import 'package:digital_clock/widgets/event_viewer.dart';
 import 'package:digital_clock/widgets/matrix_viewer.dart';
 import 'package:digital_clock/widgets/side_display.dart';
 import 'package:flutter/foundation.dart';

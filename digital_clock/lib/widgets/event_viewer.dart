@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:digital_clock/development/logger.dart';
-import 'package:digital_clock/widgets/image_painter.dart';
+import 'package:digital_clock/widgets/event_painter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

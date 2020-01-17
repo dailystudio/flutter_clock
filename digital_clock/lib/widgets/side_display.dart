@@ -1,4 +1,4 @@
-import 'package:digital_clock/widgets/image_viewer.dart';
+import 'package:digital_clock/widgets/event_viewer.dart';
 import 'package:digital_clock/widgets/widget_icon.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
