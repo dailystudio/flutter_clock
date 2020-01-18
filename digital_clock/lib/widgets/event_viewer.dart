@@ -11,6 +11,12 @@ import 'package:digital_clock/common/constants.dart';
 
 import 'package:flutter/services.dart';
 
+final defaultEvent = Event(
+  name: "default",
+  imageFile: "assets/images/default.png",
+  dates: [Date(start: "0101", end: "1231")]
+);
+
 class EventViewer extends StatefulWidget {
   final DateTime dateTime;
 
@@ -51,7 +57,6 @@ class _EventViewerState extends State<EventViewer> {
 
     Logger.debug("look up event: date = $date [${widget.dateTime}]");
 
-
     if (_events == null) {
       return matched;
     }
@@ -59,14 +64,16 @@ class _EventViewerState extends State<EventViewer> {
     for (Event e in _events) {
       for (Date d in e.dates) {
         if (date.compareTo(d.start) >= 0
-            && date.compareTo(d.end) < 0) {
+            && date.compareTo(d.end) <= 0) {
           matched = e;
         }
       }
     }
 
     if (matched == null) {
-      return matched;
+      Logger.debug("no matched event found. use default");
+
+      matched = defaultEvent;
     }
 
     await matched.loadImage();
