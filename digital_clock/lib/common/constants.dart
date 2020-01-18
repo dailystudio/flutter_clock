@@ -5,6 +5,8 @@ import 'package:digital_clock/development/logger.dart';
 import 'package:flutter/material.dart';
 
 class Constants {
+  static final String eventsFile = "assets/events.json";
+
   static final randomSeed = Random(DateTime.now().millisecondsSinceEpoch);
 
   static final Map<String, TextPainter> textPainters = Map();

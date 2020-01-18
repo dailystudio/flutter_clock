@@ -108,8 +108,8 @@ class _DigitalClockState extends State<DigitalClock> {
             child: Opacity(
               opacity: .3,
               child: Container(
-                child: ImageViewer(
-                  imageFile: "assets/images/horoscope/capricorn.png",
+                child: EventViewer(
+                  dateTime: _dateTime,
                 ),
               ),
             ),

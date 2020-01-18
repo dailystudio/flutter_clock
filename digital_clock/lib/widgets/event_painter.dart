@@ -6,13 +6,13 @@ import 'package:image/image.dart' as img;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ImagePainter extends CustomPainter {
+class EventPainter extends CustomPainter {
 
   final img.Image image;
 
   Map<String, TextPainter> _bitsPainters = Map();
 
-  ImagePainter(this.image) {
+  EventPainter(this.image) {
     Constants.buildTextPainters();
   }
 
@@ -22,6 +22,9 @@ class ImagePainter extends CustomPainter {
   }
 
   void _performPainting(Canvas canvas, Size size) {
+    if (image == null) {
+      return;
+    }
     Size cellSize = _calCellSize(size);
     int fontSize = (min(cellSize.width, cellSize.height) * 1.2).round();
 

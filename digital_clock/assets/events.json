@@ -1,0 +1,129 @@
+{
+  "version": 202001171659,
+  "events": [
+    {
+      "name": "Aries",
+      "dates": [
+        {
+          "start": "0321",
+          "end": "0420"
+        }
+      ],
+      "image": "assets/images/horoscope/aries.png"
+    },
+    {
+      "name": "Taurus",
+      "dates": [
+        {
+          "start": "0420",
+          "end": "0521"
+        }
+      ],
+      "image": "assets/images/horoscope/taurus.png"
+    },
+    {
+      "name": "Gemini",
+      "dates": [
+        {
+          "start": "0521",
+          "end": "0621"
+        }
+      ],
+      "image": "assets/images/horoscope/gemini.png"
+    },
+    {
+      "name": "Cancer",
+      "dates": [
+        {
+          "start": "0621",
+          "end": "0723"
+        }
+      ],
+      "image": "assets/images/horoscope/cancer.png"
+    },
+    {
+      "name": "Leo",
+      "dates": [
+        {
+          "start": "0723",
+          "end": "0823"
+        }
+      ],
+      "image": "assets/images/horoscope/leo.png"
+    },
+    {
+      "name": "Virgo",
+      "dates": [
+        {
+          "start": "0823",
+          "end": "0923"
+        }
+      ],
+      "image": "assets/images/horoscope/virgo.png"
+    },
+    {
+      "name": "Libra",
+      "dates": [
+        {
+          "start": "0923",
+          "end": "1023"
+        }
+      ],
+      "image": "assets/images/horoscope/libra.png"
+    },
+    {
+      "name": "Scorpio",
+      "dates": [
+        {
+          "start": "1023",
+          "end": "1122"
+        }
+      ],
+      "image": "assets/images/horoscope/scorpio.png"
+    },
+    {
+      "name": "Sagittarius",
+      "dates": [
+        {
+          "start": "1122",
+          "end": "1222"
+        }
+      ],
+      "image": "assets/images/horoscope/sagittarius.png"
+    },
+    {
+      "name": "Capricorn",
+      "dates": [
+        {
+          "start": "1222",
+          "end": "1231"
+        },
+        {
+          "start": "0101",
+          "end": "0120"
+        }
+      ],
+      "image": "assets/images/horoscope/capricorn.png"
+    },
+    {
+      "name": "Aquarius",
+      "dates": [
+        {
+          "start": "0120",
+          "end": "0219"
+        }
+      ],
+      "image": "assets/images/horoscope/aquarius.png"
+    },
+    {
+      "name": "Pisces",
+      "dates": [
+        {
+          "start": "0219",
+          "end": "0321"
+        }
+      ],
+      "image": "assets/images/horoscope/pisces.png"
+    }
+  ]
+}

@@ -1,60 +1,92 @@
-import 'dart:async';
-import 'dart:typed_data';
+import 'dart:convert';
+import 'package:intl/intl.dart';
 
+import 'package:digital_clock/core/event.dart';
 import 'package:digital_clock/development/logger.dart';
 import 'package:digital_clock/widgets/event_painter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:image/image.dart' as img;
+import 'package:digital_clock/common/constants.dart';
 
 import 'package:flutter/services.dart';
 
-class ImageViewer extends StatefulWidget {
-  final String imageFile;
+class EventViewer extends StatefulWidget {
+  final DateTime dateTime;
 
-  ImageViewer({
+  EventViewer({
     Key key,
-    this.imageFile,
+    this.dateTime,
   }) : super(key: key);
 
   @override
-  _ImageViewerState createState() => _ImageViewerState();
+  _EventViewerState createState() => _EventViewerState();
 }
 
-class _ImageViewerState extends State<ImageViewer> {
-  var _futureBuilderFuture;
+class _EventViewerState extends State<EventViewer> {
+
+  static List<Event> _events;
 
   @override
   void initState() {
     super.initState();
-    _futureBuilderFuture = _loadFromAsset(widget.imageFile);
   }
 
-  Future<img.Image> _loadFromAsset(String frameFile) async {
-    Logger.debug("loading image from assets ... [$frameFile]");
+  Future<Event> _lookupEvent() async {
+    final date = DateFormat('MMdd').format(widget.dateTime);
+    Event matched;
 
-    ByteData data = await rootBundle.load(frameFile);
+    if (_events == null) {
+      String eventsJson = await rootBundle.loadString(Constants.eventsFile);
+      Map<String, dynamic> eventsMap = jsonDecode(eventsJson);
 
-    Uint8List bytes =
-        data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
+      Events events = Events.fromJson(eventsMap);
 
-    img.Image image = img.decodeImage(bytes);
+      if (events != null) {
+        _events = events.events;
+      }
 
-    return image;
+      Logger.debug("${_events?.length} events loaded in total.");
+    }
+
+    Logger.debug("look up event: date = $date [${widget.dateTime}]");
+
+
+    if (_events == null) {
+      return matched;
+    }
+
+    for (Event e in _events) {
+      for (Date d in e.dates) {
+        if (date.compareTo(d.start) >= 0
+            && date.compareTo(d.end) < 0) {
+          matched = e;
+        }
+      }
+    }
+
+    if (matched == null) {
+      return matched;
+    }
+
+    await matched.loadImage();
+
+    Logger.debug("matched event: $matched");
+
+    return matched;
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: _futureBuilderFuture,
+        future: _lookupEvent(),
         builder: (context, snapshot) {
           if (snapshot.connectionState != ConnectionState.done) {
             return Container();
           }
 
           return CustomPaint(
-            painter: ImagePainter(snapshot.data),
+            painter: EventPainter(snapshot.data?.image),
           );
         });
   }
