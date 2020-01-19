@@ -21,7 +21,7 @@ The main layout of this digital clock is built with following three main parts. 
 # Events
 Currently, the dynamic background supports the following events:
 
-    Event Name       | Event Type | Date
+Event Name       | Event Type | Date
 :--:                 | :-:        | :-:
 Aries                | Horoscope  | Mar. 21 - Arp. 19
 Taurus               | Horoscope  | Apr. 20 - May 20
@@ -51,8 +51,9 @@ All the images under **assets/images** are published under Attribution 3.0 Unpor
 
 #### Attribution:
 
-    Files | Author | Link
-:--:      | :-:    | :-:
+
+Files | Author | Link
+:--:      | :-:    | :-
 horoscope/* | Chamestudio Pvt Ltd | [https://www.iconfinder.com/iconsets/astronomical-signs](https://www.iconfinder.com/iconsets/astronomical-signs)
 weather/* | Fatkhul Karim | [https://www.iconfinder.com/iconsets/weather-line-19](https://www.iconfinder.com/iconsets/weather-line-19)
 festival/christmas.png | Squarecup LTD | [https://www.iconfinder.com/iconsets/christmas-2442](https://www.iconfinder.com/iconsets/christmas-2442)
