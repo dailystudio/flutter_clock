@@ -45,6 +45,14 @@ The definition of events are described in the file **assets/events.json**. You c
 
 # Images
 
+### Event Image
+The image file for the dynamic background should be stored in PNG format with resolution 60 x36. The area, which has a 39 x 36 grid, on the left side will be the safe area. The content in this area will not be overlapped by the side display. Here is a concrete sample:
+
+![](./event_image.png)
+
+In the image, points with **transparent color** (#0000000000) will be mapped to black space on the clock face. The rest points will be filled with random characters on the screen.
+
+
 
 ### License
 All the images under **assets/images** are published under Attribution 3.0 Unported (CC BY 3.0).
