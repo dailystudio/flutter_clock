@@ -99,8 +99,7 @@ class _DigitalClockState extends State<DigitalClock> {
               opacity: .3,
               child: Container(
                 child: EventViewer(
-//                  dateTime: _dateTime,
-                  dateTime: DateTime(2020, 12, 30),
+                  dateTime: _dateTime,
                 ),
               ),
             ),
