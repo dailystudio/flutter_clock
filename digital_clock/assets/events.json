@@ -1,12 +1,12 @@
 {
-  "version": 202001191023,
+  "version": 202001192302,
   "events": [
     {
       "name": "Aries",
       "dates": [
         {
           "start": "0321",
-          "end": "0420"
+          "end": "0419"
         }
       ],
       "image": "assets/images/horoscope/aries.png"
@@ -16,7 +16,7 @@
       "dates": [
         {
           "start": "0420",
-          "end": "0521"
+          "end": "0520"
         }
       ],
       "image": "assets/images/horoscope/taurus.png"
@@ -26,7 +26,7 @@
       "dates": [
         {
           "start": "0521",
-          "end": "0621"
+          "end": "0620"
         }
       ],
       "image": "assets/images/horoscope/gemini.png"
@@ -36,7 +36,7 @@
       "dates": [
         {
           "start": "0621",
-          "end": "0723"
+          "end": "0722"
         }
       ],
       "image": "assets/images/horoscope/cancer.png"
@@ -46,7 +46,7 @@
       "dates": [
         {
           "start": "0723",
-          "end": "0823"
+          "end": "0822"
         }
       ],
       "image": "assets/images/horoscope/leo.png"
@@ -56,7 +56,7 @@
       "dates": [
         {
           "start": "0823",
-          "end": "0923"
+          "end": "0922"
         }
       ],
       "image": "assets/images/horoscope/virgo.png"
@@ -66,7 +66,7 @@
       "dates": [
         {
           "start": "0923",
-          "end": "1023"
+          "end": "1022"
         }
       ],
       "image": "assets/images/horoscope/libra.png"
@@ -76,7 +76,7 @@
       "dates": [
         {
           "start": "1023",
-          "end": "1122"
+          "end": "1121"
         }
       ],
       "image": "assets/images/horoscope/scorpio.png"
@@ -86,7 +86,7 @@
       "dates": [
         {
           "start": "1122",
-          "end": "1222"
+          "end": "1221"
         }
       ],
       "image": "assets/images/horoscope/sagittarius.png"
@@ -100,7 +100,7 @@
         },
         {
           "start": "0101",
-          "end": "0120"
+          "end": "0119"
         }
       ],
       "image": "assets/images/horoscope/capricorn.png"
@@ -110,7 +110,7 @@
       "dates": [
         {
           "start": "0120",
-          "end": "0219"
+          "end": "0218"
         }
       ],
       "image": "assets/images/horoscope/aquarius.png"
@@ -120,7 +120,7 @@
       "dates": [
         {
           "start": "0219",
-          "end": "0321"
+          "end": "0320"
         }
       ],
       "image": "assets/images/horoscope/pisces.png"
@@ -166,7 +166,7 @@
       "image": "assets/images/festival/christmas.png"
     },
     {
-      "name": "New year",
+      "name": "New Year",
       "dates": [
         {
           "start": "1231",
