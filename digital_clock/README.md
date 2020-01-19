@@ -53,7 +53,7 @@ All the images under **assets/images** are published under Attribution 3.0 Unpor
 
 
 Files | Author | Link
-:--:      | :-:    | :-
+:--:      | :-:    | :-:
 horoscope/* | Chamestudio Pvt Ltd | [https://www.iconfinder.com/iconsets/astronomical-signs](https://www.iconfinder.com/iconsets/astronomical-signs)
 weather/* | Fatkhul Karim | [https://www.iconfinder.com/iconsets/weather-line-19](https://www.iconfinder.com/iconsets/weather-line-19)
 festival/christmas.png | Squarecup LTD | [https://www.iconfinder.com/iconsets/christmas-2442](https://www.iconfinder.com/iconsets/christmas-2442)
