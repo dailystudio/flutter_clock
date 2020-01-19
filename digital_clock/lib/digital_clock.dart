@@ -4,6 +4,7 @@
 
 import 'dart:async';
 
+import 'package:digital_clock/common/constants.dart';
 import 'package:digital_clock/widgets/event_viewer.dart';
 import 'package:digital_clock/widgets/matrix_viewer.dart';
 import 'package:digital_clock/widgets/side_display.dart';
@@ -105,20 +106,30 @@ class _DigitalClockState extends State<DigitalClock> {
             ),
           ),
           Positioned(
-            //
             left: 0, right: 0, top: 0, bottom: 0,
             child: MatrixViewer(dateTime: _dateTime, model: widget.model),
           ),
           Positioned(
+            left: 0,
             right: 0,
             top: 0,
             bottom: 0,
             child: Container(
-              //
-              constraints: BoxConstraints.expand(width: 230),
-              child: SideDisplay(
-                dateTime: _dateTime,
-                model: widget.model,
+              constraints: BoxConstraints.expand(),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    flex: (100 - Configuration.sideDisplayFlex),
+                    child: Container(),
+                  ),
+                  Expanded(
+                    flex: Configuration.sideDisplayFlex,
+                    child: SideDisplay(
+                      dateTime: _dateTime,
+                      model: widget.model,
+                    ),
+                  ),
+                ],
               ),
             ),
           ),

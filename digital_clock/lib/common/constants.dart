@@ -140,8 +140,11 @@ class Constants {
 }
 
 class Configuration {
+  static final int sideDisplayFlex = 35;
+
   static final int defaultFontSize = 28;
   static final int maxFontSize = 30;
+  static final int maxLocationTextLength = 22;
 
   static final leadingCharacters = 5;
   static final tailCharacters = 5;

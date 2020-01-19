@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:digital_clock/common/constants.dart';
 import 'package:digital_clock/widgets/event_viewer.dart';
 import 'package:digital_clock/widgets/widget_icon.dart';
 import 'package:intl/intl.dart';
@@ -51,6 +54,12 @@ class _SideDisplayState extends State<SideDisplay>
     final date = DateFormat('MMMM d, yyyy').format(dateTime);
     final amOrPm = DateFormat('aaa').format(dateTime);
 
+    String location = widget.model.location?.toString();
+    if (location != null) {
+      location = location.substring(0,
+          min(location.length, Configuration.maxLocationTextLength));
+    }
+
     return Container(
       decoration: BoxDecoration(color: Color(0xFF000910).withAlpha(220)),
       child: Stack(alignment: Alignment.center, children: <Widget>[
@@ -94,13 +103,6 @@ class _SideDisplayState extends State<SideDisplay>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
-//                Container(
-//                  padding: EdgeInsets.only(bottom: 20, right:10),
-//                  child: ImageViewer(
-//                    imageFile: "assets/images/horoscope/capricorn.png",
-//                  ),
-//                ),
-//
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
@@ -117,7 +119,7 @@ class _SideDisplayState extends State<SideDisplay>
                   ],
                 ),
                 Text(
-                  "${widget.model.location}",
+                  "$location",
                   style: CLOCK_DATE_STYLE,
                 ),
               ],

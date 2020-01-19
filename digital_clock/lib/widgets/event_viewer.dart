@@ -83,7 +83,7 @@ class _EventViewerState extends State<EventViewer> {
 
     await picked.loadImage();
 
-    Logger.debug("picked event: $picked");
+    Logger.info("picked event for [$date]: $picked");
 
     return picked;
   }

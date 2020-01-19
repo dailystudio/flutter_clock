@@ -96,7 +96,7 @@ class Event {
 
   @override
   String toString() {
-    return "event[$name]: dates = $dates, imageFile = $imageFile (image: $image)";
+    return "[$name]: dates = $dates, imageFile = $imageFile (image: $image)";
   }
 }
 
