@@ -93,23 +93,14 @@ class _DigitalClockState extends State<DigitalClock> {
             decoration: BoxDecoration(color: Colors.black),
           ),
           Positioned(
-            left: 0, right: 0, top: 0, bottom: 0,
-            child: Opacity(
-              opacity: .0,
-              child: Image(
-                image: AssetImage('assets/images/background.jpg'),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          Positioned(
             left: 0, top: 0,
             right: 0, bottom: 0,
             child: Opacity(
               opacity: .3,
               child: Container(
                 child: EventViewer(
-                  dateTime: _dateTime,
+//                  dateTime: _dateTime,
+                  dateTime: DateTime(2020, 12, 30),
                 ),
               ),
             ),

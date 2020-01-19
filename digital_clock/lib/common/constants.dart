@@ -1,11 +1,23 @@
 import 'dart:math';
 import 'dart:ui';
+import 'package:digital_clock/core/event.dart';
 import 'package:digital_clock/core/gradient_color.dart';
 import 'package:digital_clock/development/logger.dart';
 import 'package:flutter/material.dart';
 
 class Constants {
   static final String eventsFile = "assets/events.json";
+
+  static final defaultEvent = Event(
+      name: "default",
+      imageFile: "assets/images/default.png",
+      dates: [
+        Date(
+            start: "0101",
+            end: "1231"
+        )
+      ]
+  );
 
   static final randomSeed = Random(DateTime.now().millisecondsSinceEpoch);
 

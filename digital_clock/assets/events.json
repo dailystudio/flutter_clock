@@ -1,5 +1,5 @@
 {
-  "version": 202001171659,
+  "version": 202001191023,
   "events": [
     {
       "name": "Aries",
@@ -124,6 +124,56 @@
         }
       ],
       "image": "assets/images/horoscope/pisces.png"
+    },
+    {
+      "name": "Valentine's Day",
+      "dates": [
+        {
+          "start": "0214",
+          "end": "0214"
+        }
+      ],
+      "image": "assets/images/festival/valentine.png"
+    },
+    {
+      "name": "Saint Patrick's Day",
+      "dates": [
+        {
+          "start": "0317",
+          "end": "0317"
+        }
+      ],
+      "image": "assets/images/festival/st_patrick_day.png"
+    },
+    {
+      "name": "Halloween",
+      "dates": [
+        {
+          "start": "1031",
+          "end": "1031"
+        }
+      ],
+      "image": "assets/images/festival/halloween.png"
+    },
+    {
+      "name": "Christmas",
+      "dates": [
+        {
+          "start": "1224",
+          "end": "1225"
+        }
+      ],
+      "image": "assets/images/festival/christmas.png"
+    },
+    {
+      "name": "New year",
+      "dates": [
+        {
+          "start": "1231",
+          "end": "1231"
+        }
+      ],
+      "image": "assets/images/festival/new_year.png"
     }
   ]
 }

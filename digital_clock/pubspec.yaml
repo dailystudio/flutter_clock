@@ -23,5 +23,6 @@ flutter:
     - assets/images/
     - assets/images/weather/
     - assets/images/horoscope/
+    - assets/images/festival/
     - assets/events.json
 

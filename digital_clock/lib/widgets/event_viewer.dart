@@ -11,12 +11,6 @@ import 'package:digital_clock/common/constants.dart';
 
 import 'package:flutter/services.dart';
 
-final defaultEvent = Event(
-  name: "default",
-  imageFile: "assets/images/default.png",
-  dates: [Date(start: "0101", end: "1231")]
-);
-
 class EventViewer extends StatefulWidget {
   final DateTime dateTime;
 
@@ -38,15 +32,25 @@ class _EventViewerState extends State<EventViewer> {
     super.initState();
   }
 
-  Future<Event> _lookupEvent() async {
+  Future<Event> _lookupEvents() async {
     final date = DateFormat('MMdd').format(widget.dateTime);
-    Event matched;
+    List<Event> matched = List();
+    Event picked = Constants.defaultEvent;
 
     if (_events == null) {
-      String eventsJson = await rootBundle.loadString(Constants.eventsFile);
-      Map<String, dynamic> eventsMap = jsonDecode(eventsJson);
+      Events events;
 
-      Events events = Events.fromJson(eventsMap);
+      try {
+        String eventsJson = await rootBundle.loadString(Constants.eventsFile);
+        Map<String, dynamic> eventsMap = jsonDecode(eventsJson);
+
+        events = Events.fromJson(eventsMap);
+
+      } catch (e) {
+        Logger.error("parse events from ${Constants.eventsFile} failed: $e");
+
+        events = null;
+      }
 
       if (events != null) {
         _events = events.events;
@@ -58,35 +62,36 @@ class _EventViewerState extends State<EventViewer> {
     Logger.debug("look up event: date = $date [${widget.dateTime}]");
 
     if (_events == null) {
-      return matched;
+      return picked;
     }
 
     for (Event e in _events) {
       for (Date d in e.dates) {
         if (date.compareTo(d.start) >= 0
             && date.compareTo(d.end) <= 0) {
-          matched = e;
+          matched.add(e);
         }
       }
     }
 
-    if (matched == null) {
+    if (matched.length > 0) {
+      Logger.debug("pick a event from ${matched.length} matched event(s).");
+      picked = matched[matched.length - 1];
+    } else {
       Logger.debug("no matched event found. use default");
-
-      matched = defaultEvent;
     }
 
-    await matched.loadImage();
+    await picked.loadImage();
 
-    Logger.debug("matched event: $matched");
+    Logger.debug("picked event: $picked");
 
-    return matched;
+    return picked;
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: _lookupEvent(),
+        future: _lookupEvents(),
         builder: (context, snapshot) {
           if (snapshot.connectionState != ConnectionState.done) {
             return Container();
