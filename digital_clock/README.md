@@ -111,13 +111,8 @@ The image file for the dynamic background should be stored in PNG format with re
 
 In the image, points with **transparent color** (#0000000000) will be mapped to black space on the clock face. The rest points will be filled with random characters on the screen.
 
-
-
 ### License
-All the images under **assets/images** are published under Attribution 3.0 Unported (CC BY 3.0).
-
-#### Attribution:
-
+All the images under **assets/images** are published under **Attribution 3.0 Unported (CC BY 3.0)**.  Here is the attribution of images used in the application:
 
 Files | Author | Link
 :--:  | :-:    | :-:
@@ -128,3 +123,13 @@ festival/halloween.png | Ionescu Georgiana Lavinia | [https://www.iconfinder.com
 festival/new_year.png | Becris . |[https://www.iconfinder.com/iconsets/chinese-new-year-4](https://www.iconfinder.com/iconsets/chinese-new-year-4)
 festival/st\_patrick\_day.png | Alpár-Etele Méder | [https://www.iconfinder.com/icons/3017878/clover_day_patrick_st_icon](https://www.iconfinder.com/icons/3017878/clover_day_patrick_st_icon)
 festival/valentine.png | Royyan Wijaya | [https://www.iconfinder.com/iconsets/gradak-interface](https://www.iconfinder.com/iconsets/gradak-interface)
+
+
+# Issue
+Here is an issue with **Embedding-V2**. The picture below shows the problem:
+
+![](./issue.png)
+
+On the left side, the project uses Embedding v2 API, while the project does not use it on the right side. **There is a blank space on the top (with the height of the status bar) even we call the API to enable fullscreen mode in the Dart side.**
+
+To avoid this issue, DO NOT remove **android/** directory. After Flutter 1.12, Embedding V2 is enabled by default. If you remove that directory and use *flutter create* command to create a new one, the issue will appear.
