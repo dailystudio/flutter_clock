@@ -20,16 +20,15 @@ class Date {
     );
   }
 
-  Map<String, dynamic> toJson() => <String, dynamic> {
-    'start': start,
-    'end': end,
-  };
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'start': start,
+        'end': end,
+      };
 
   @override
   String toString() {
     return "($start, $end)";
   }
-
 }
 
 class Event {
@@ -68,18 +67,17 @@ class Event {
     }
 
     Uint8List bytes =
-      data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
+        data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
 
     image = img.decodeImage(bytes);
   }
 
   factory Event.fromJson(Map<String, dynamic> parsedJson) {
-    var datesFromJson  = parsedJson['dates'];
-    List<Date> dates = (datesFromJson as List)
-        .map((data) => new Date.fromJson(data))
-        .toList();
+    var datesFromJson = parsedJson['dates'];
+    List<Date> dates =
+        (datesFromJson as List).map((data) => new Date.fromJson(data)).toList();
 
-    Event e =  Event(
+    Event e = Event(
       name: parsedJson['name'],
       imageFile: parsedJson['image'],
       dates: dates,
@@ -88,11 +86,11 @@ class Event {
     return e;
   }
 
-  Map<String, dynamic> toJson() => <String, dynamic> {
-    'name': name,
-    'image': imageFile,
-    'dates': dates,
-  };
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'name': name,
+        'image': imageFile,
+        'dates': dates,
+      };
 
   @override
   String toString() {
@@ -110,7 +108,7 @@ class Events {
   });
 
   factory Events.fromJson(Map<String, dynamic> parsedJson) {
-    var eventsFromJson  = parsedJson['events'];
+    var eventsFromJson = parsedJson['events'];
     List<Event> events = (eventsFromJson as List)
         .map((data) => new Event.fromJson(data))
         .toList();
@@ -121,10 +119,10 @@ class Events {
     );
   }
 
-  Map<String, dynamic> toJson() => <String, dynamic> {
-    'version': version,
-    'events': events,
-  };
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'version': version,
+        'events': events,
+      };
 
   @override
   String toString() {

@@ -7,7 +7,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class EventPainter extends CustomPainter {
-
   final img.Image image;
 
   Map<String, TextPainter> _bitsPainters = Map();
@@ -66,8 +65,7 @@ class EventPainter extends CustomPainter {
           }
 
           if (tp != null) {
-            tp.paint(canvas,
-                Offset(x * cellSize.width, y * cellSize.height));
+            tp.paint(canvas, Offset(x * cellSize.width, y * cellSize.height));
           }
         }
       }
@@ -75,13 +73,12 @@ class EventPainter extends CustomPainter {
   }
 
   Size _calCellSize(Size canvasSize) {
-    return Size(canvasSize.width / image.width,
-        canvasSize.height / image.height);
+    return Size(
+        canvasSize.width / image.width, canvasSize.height / image.height);
   }
 
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {
     return true;
   }
-
 }

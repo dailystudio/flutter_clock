@@ -23,7 +23,8 @@ class DigitalClock extends StatefulWidget {
   _DigitalClockState createState() => _DigitalClockState();
 }
 
-class _DigitalClockState extends State<DigitalClock> with WidgetsBindingObserver {
+class _DigitalClockState extends State<DigitalClock>
+    with WidgetsBindingObserver {
   DateTime _dateTime = DateTime.now();
   Timer _timer;
 
@@ -109,8 +110,10 @@ class _DigitalClockState extends State<DigitalClock> with WidgetsBindingObserver
             decoration: BoxDecoration(color: Colors.black),
           ),
           Positioned(
-            left: 0, top: 0,
-            right: 0, bottom: 0,
+            left: 0,
+            top: 0,
+            right: 0,
+            bottom: 0,
             child: Opacity(
               opacity: .3,
               child: Container(
@@ -121,7 +124,10 @@ class _DigitalClockState extends State<DigitalClock> with WidgetsBindingObserver
             ),
           ),
           Positioned(
-            left: 0, right: 0, top: 0, bottom: 0,
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0,
             child: MatrixViewer(dateTime: _dateTime, model: widget.model),
           ),
           Positioned(

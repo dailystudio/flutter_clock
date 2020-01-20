@@ -24,7 +24,6 @@ class EventViewer extends StatefulWidget {
 }
 
 class _EventViewerState extends State<EventViewer> {
-
   static List<Event> _events;
 
   @override
@@ -45,7 +44,6 @@ class _EventViewerState extends State<EventViewer> {
         Map<String, dynamic> eventsMap = jsonDecode(eventsJson);
 
         events = Events.fromJson(eventsMap);
-
       } catch (e) {
         Logger.error("parse events from ${Constants.eventsFile} failed: $e");
 
@@ -67,8 +65,7 @@ class _EventViewerState extends State<EventViewer> {
 
     for (Event e in _events) {
       for (Date d in e.dates) {
-        if (date.compareTo(d.start) >= 0
-            && date.compareTo(d.end) <= 0) {
+        if (date.compareTo(d.start) >= 0 && date.compareTo(d.end) <= 0) {
           matched.add(e);
         }
       }

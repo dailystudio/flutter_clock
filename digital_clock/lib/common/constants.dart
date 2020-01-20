@@ -11,13 +11,7 @@ class Constants {
   static final defaultEvent = Event(
       name: "default",
       imageFile: "assets/images/default.png",
-      dates: [
-        Date(
-            start: "0101",
-            end: "1231"
-        )
-      ]
-  );
+      dates: [Date(start: "0101", end: "1231")]);
 
   static final randomSeed = Random(DateTime.now().millisecondsSinceEpoch);
 

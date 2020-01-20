@@ -56,8 +56,8 @@ class _SideDisplayState extends State<SideDisplay>
 
     String location = widget.model.location?.toString();
     if (location != null) {
-      location = location.substring(0,
-          min(location.length, Configuration.maxLocationTextLength));
+      location = location.substring(
+          0, min(location.length, Configuration.maxLocationTextLength));
     }
 
     return Container(
