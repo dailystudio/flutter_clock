@@ -45,7 +45,9 @@ class _SideDisplayState extends State<SideDisplay>
     }
 
     return Container(
-      decoration: BoxDecoration(color: Color(0xFF000910).withAlpha(220)),
+      decoration: BoxDecoration(
+          color: Colors.black.withAlpha((255 * Configuration.sideDisplayOpacity).round())
+      ),
       child: Stack(alignment: Alignment.center, children: <Widget>[
         Positioned(
           top: 0,

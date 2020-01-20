@@ -35,19 +35,19 @@ class Constants {
 
   static final clockTimeStyle = TextStyle(
     color: Configuration.defaultColor,
-    fontSize: 64,
+    fontSize: Configuration.sideDisplayLargeFontSize,
     fontWeight: FontWeight.bold,
   );
 
   static final clockAmOrPmStyle = TextStyle(
     color: Configuration.defaultColor,
-    fontSize: 18,
+    fontSize: Configuration.sideDisplayNormalFontSize,
     fontWeight: FontWeight.bold,
   );
 
   static final clockDateStyle = TextStyle(
       color: Configuration.defaultColor,
-      fontSize: 18,
+      fontSize: Configuration.sideDisplayNormalFontSize,
       fontStyle: FontStyle.italic);
 
   static TextPainter _createPainter(String text, Color color, int fontSize) {
@@ -153,9 +153,13 @@ class Constants {
 
 class Configuration {
   static int sideDisplayFlex = 35;
+  static double sideDisplayOpacity = .6;
+  static double eventViewOpacity = .4;
 
-  static int defaultFontSize = 28;
+  static int defaultFontSize = 26;
   static int maxFontSize = 30;
+  static double sideDisplayLargeFontSize = 64;
+  static double sideDisplayNormalFontSize = 18;
   static int maxLocationTextLength = 22;
 
   static int leadingCharacters = 5;
@@ -163,8 +167,10 @@ class Configuration {
   static int maxCharacters = 30;
   static int minCharacters = 12;
 
-  static int streamGenerationInterval = 5;
+  static int streamGenerationInterval = 6;
   static int maxStreamSpeed = 6;
+  static int maxStreams = 40;
+  static bool streamsUnderSideDisplay = false;
 
   static Color defaultColor = Colors.green;
 

@@ -1,3 +1,4 @@
+import 'package:digital_clock/development/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:digital_clock/common/constants.dart';
 import 'package:digital_clock/core/text_stream.dart';
@@ -20,9 +21,14 @@ class MatrixPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    if (_progress.round() % Configuration.streamGenerationInterval == 0) {
+    if (_progress.round() % Configuration.streamGenerationInterval == 0
+        && _textStreams.length < Configuration.maxStreams) {
       var ts;
-      ts = _generateNewStream(Rect.fromLTWH(0, 0, size.width, size.height));
+      var boundary = Rect.fromLTWH(0, 0,
+          Configuration.streamsUnderSideDisplay ? size.width : size.width * ((100 - Configuration.sideDisplayFlex) / 100) ,
+          size.height);
+
+      ts = _generateNewStream(boundary);
       _textStreams.add(ts);
     }
 
@@ -62,6 +68,8 @@ class MatrixPainter extends CustomPainter {
     for (TextStream s in useless) {
       streams.remove(s);
     }
+
+//    Logger.debug("${useless.length} streams removed. ${streams.length} streams remained.");
   }
 
   TextStream _generateNewStream(Rect boundary) {
@@ -73,7 +81,6 @@ class MatrixPainter extends CustomPainter {
 
     return TextStream(
         "C$id",
-//        Constants.randomString(len, charset: _characters),
         Constants.randomString(len),
         boundary);
   }

@@ -19,16 +19,25 @@ The main layout of this digital clock is built with the following three main par
 > The rest of the useful information is enclosed in this part, including time, date, weather, temperature, and location.
 
 # Configuration
-Primary parameters for this clock are stored in the instance of **Configuration** class, which is defined in **lib/common/constant.dart**. Here is a brief introduction to these parameters:
+Primary configuration parameters for this clock are stored in the instance of **Configuration** class, which is defined in **lib/common/constant.dart**. Here is a brief introduction to these parameters:
 
 - **sideDisplayFlex** (default: 35)
 > Indicates the flex ratio that the side display area will occupy.
+
+- **sideDisplayOpacity** (default: .6)
+> Opacity of side display background.
 
 - **defaultFontSize** (default: 28)
 > The default font size of characters in text streams. The maximum font size of text streams will equal the value of this parameter whereas the minimum font size will be a half. 
 
 - **maxFontSize** (default: 30)
 > The maximum font size of characters that will appear on the screens. It should be larger than the defaultFontSize or equal with it at least.
+
+- **sideDisplayLargeFontSize** (default: 64)
+> The font size of large text on side display, e.g. Time.
+
+- **sideDisplayNormalFontSize** (default: 18)
+> The font size of normal text on side display, e.g. date, weather, location, etc.
 
 - **maxLocationTextLength** (default: 22)
 > Maximum count of characters will display in the location area of side display.
@@ -45,11 +54,17 @@ Primary parameters for this clock are stored in the instance of **Configuration*
 - **minCharacters** (default: 12)
 > The minimum length of a text stream.
 
-- **streamGenerationInterval** (default: 5)
+- **streamGenerationInterval** (default: 6)
 > The generation speed of text streams. The larger the value is, the less text steams will appear on the screen.
 
 - **maxStreamSpeed** (default: 6)
 > The maximum speed of text streams. 
+
+- **maxStreams** (default: 40)
+> The maximum count of text streams appear on the screen at the same time. This is the key parameter to control the performance on the different devices.
+
+- **streamsUnderSideDisplay** (default: false)
+> Whether display text streams under the side display.
 
 - **defaultColor** (default: Colors.green)
 > Primary theme color of this clock display.
@@ -59,6 +74,8 @@ Primary parameters for this clock are stored in the instance of **Configuration*
 
 - **tailGradientColors** (default: defaultColor -> Colors.white)
 > Gradient colors of tail part of a text stream.
+
+You can adjust **streamGenerationInterval**, **maxStreamSpeed**, **maxStreams** and **streamsUnderSideDisplay** to balance the effect and the performance on various devices.
 
 # Events
 Currently, the dynamic background supports the following events:
@@ -83,7 +100,7 @@ Halloween            | Festival   | Oct. 31
 Christmas            | Festival   | Nov. 24 - Nov. 25
 New Year             | Festival   | Dec. 31
 
-The definition of events are described in the file **assets/events.json**. You can modify that file to support more events.
+The definition of events is described in the file **assets/events.json**. You can modify that file to support more events.
 
 # Images
 

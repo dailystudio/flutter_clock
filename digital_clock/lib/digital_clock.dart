@@ -115,7 +115,7 @@ class _DigitalClockState extends State<DigitalClock>
             right: 0,
             bottom: 0,
             child: Opacity(
-              opacity: .3,
+              opacity: Configuration.eventViewOpacity,
               child: Container(
                 child: EventViewer(
                   dateTime: _dateTime,
@@ -128,7 +128,7 @@ class _DigitalClockState extends State<DigitalClock>
             right: 0,
             top: 0,
             bottom: 0,
-            child: MatrixViewer(dateTime: _dateTime, model: widget.model),
+            child: ClipRect(child: MatrixViewer(dateTime: _dateTime, model: widget.model)),
           ),
           Positioned(
             left: 0,
