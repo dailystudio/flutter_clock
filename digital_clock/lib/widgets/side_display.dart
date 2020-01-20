@@ -1,28 +1,12 @@
 import 'dart:math';
 
 import 'package:digital_clock/common/constants.dart';
-import 'package:digital_clock/widgets/event_viewer.dart';
 import 'package:digital_clock/widgets/widget_icon.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_clock_helper/model.dart';
 import 'package:flutter/cupertino.dart';
-
-const CLOCK_TIME_STYLE = TextStyle(
-  color: Colors.green,
-  fontSize: 64,
-  fontWeight: FontWeight.bold,
-);
-
-const CLOCK_AMORPM_STYLE = TextStyle(
-  color: Colors.green,
-  fontSize: 18,
-  fontWeight: FontWeight.bold,
-);
-
-const CLOCK_DATE_STYLE =
-    TextStyle(color: Colors.green, fontSize: 18, fontStyle: FontStyle.italic);
 
 class SideDisplay extends StatefulWidget {
   final DateTime dateTime;
@@ -74,7 +58,7 @@ class _SideDisplayState extends State<SideDisplay>
                 children: <Widget>[
                   Text(
                     "$hour:$minute",
-                    style: CLOCK_TIME_STYLE,
+                    style: Constants.clockTimeStyle,
                   ),
                   Offstage(
                     offstage: widget.model.is24HourFormat,
@@ -82,7 +66,7 @@ class _SideDisplayState extends State<SideDisplay>
                       padding: EdgeInsets.only(left: 5, bottom: 12),
                       child: Text(
                         "$amOrPm",
-                        style: CLOCK_AMORPM_STYLE,
+                        style: Constants.clockAmOrPmStyle,
                       ),
                     ),
                   )
@@ -90,7 +74,7 @@ class _SideDisplayState extends State<SideDisplay>
               ),
               Text(
                 "$date",
-                style: CLOCK_DATE_STYLE,
+                style: Constants.clockDateStyle,
               ),
             ],
           ),
@@ -114,13 +98,13 @@ class _SideDisplayState extends State<SideDisplay>
                     ),
                     Text(
                       "${widget.model.temperatureString}",
-                      style: CLOCK_DATE_STYLE,
+                      style: Constants.clockDateStyle,
                     ),
                   ],
                 ),
                 Text(
                   "$location",
-                  style: CLOCK_DATE_STYLE,
+                  style: Constants.clockDateStyle,
                 ),
               ],
             ),

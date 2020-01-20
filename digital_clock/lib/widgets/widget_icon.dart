@@ -1,3 +1,4 @@
+import 'package:digital_clock/common/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,7 @@ class _WeatherIconState extends State<WeatherIcon> {
     return Image.asset(
       "assets/images/weather/${describeEnum(widget.weather)}.png",
       width: 28,
-      color: Colors.green,
+      color: Configuration.defaultColor,
     );
   }
 }

@@ -5,18 +5,60 @@ This Flutter application is a digital clock powered with Matrix text streams eff
 ![](./digital_clock.jpg)
 
 # Layout
-The main layout of this digital clock is built with following three main parts. Each part is highlighted with an orange frame.
+The main layout of this digital clock is built with the following three main parts. Each part is highlighted with an orange frame.
 
 ![](./layout.png)
 
 1. Dynamic Background
-> A live background uses characters matrix to construct an image. The image represenet an event of the date. Basically, it will represent the constellation of the current date. 
+> A live background uses a character matrix to construct an image. The image represents an event of the date. It will represent the constellation of the current date. 
 
 2. Text Streams
-> Text streams drop from the top of the screen to the bottom, the same effect as the moive Matrix. The character in each stream are selected randomly and the speed of each stream is also various. All of the streams will be reset once every minute.
+> Text streams drop from the top of the screen to the bottom, the same effect as the movie Matrix. The character in each stream are selected randomly and the speed of each stream is also various. All of the streams will be reset once every minute.
 
 3. Side Display
-> Rest of useful information is enclosed in this part, including time, date, weatcher, temparture and location.
+> The rest of the useful information is enclosed in this part, including time, date, weather, temperature, and location.
+
+# Configuration
+Primary parameters for this clock are stored in the instance of **Configuration** class, which is defined in **lib/common/constant.dart**. Here is a brief introduction to these parameters:
+
+- **sideDisplayFlex** (default: 35)
+> Indicates the flex ratio that the side display area will occupy.
+
+- **defaultFontSize** (default: 28)
+> The default font size of characters in text streams. The maximum font size of text streams will equal the value of this parameter whereas the minimum font size will be a half. 
+
+- **maxFontSize** (default: 30)
+> The maximum font size of characters that will appear on the screens. It should be larger than the defaultFontSize or equal with it at least.
+
+- **maxLocationTextLength** (default: 22)
+> Maximum count of characters will display in the location area of side display.
+
+- **leadingCharacters** (default: 5)
+> The count of characters which will be treated as leading part of the text streams.  The leading part of a text stream will be applied with gradient colors.
+
+- **tailCharacters** (default: 5)
+> The count of characters which will be treated as tail part of the text streams.  The tail part of a text stream will be applied with gradient colors.
+
+- **maxCharacters** (default: 30)
+> The maximum length of a text stream.
+
+- **minCharacters** (default: 12)
+> The minimum length of a text stream.
+
+- **streamGenerationInterval** (default: 5)
+> The generation speed of text streams. The larger the value is, the less text steams will appear on the screen.
+
+- **maxStreamSpeed** (default: 6)
+> The maximum speed of text streams. 
+
+- **defaultColor** (default: Colors.green)
+> Primary theme color of this clock display.
+
+- **leadingGradientColors** (default: transparent -> defaultColor)
+> Gradient colors of leading part of a text stream.
+
+- **tailGradientColors** (default: defaultColor -> Colors.white)
+> Gradient colors of tail part of a text stream.
 
 # Events
 Currently, the dynamic background supports the following events:

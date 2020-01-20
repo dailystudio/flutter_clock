@@ -30,7 +30,25 @@ class Constants {
 //    '\u{30F0}\u{30F1}\u{30F2}\u{30F3}\u{30F4}\u{30F5}\u{30F6}\u{30F7}\u{30F8}\u{30F9}\u{30FA}\u{30FB}\u{30FC}\u{30FD}\u{30FE}\u{30FF}' +
       '';
 
-  static final _defaultTextStyle = TextStyle(color: Colors.green, height: 1);
+  static final _defaultTextStyle =
+      TextStyle(color: Configuration.defaultColor, height: 1);
+
+  static final clockTimeStyle = TextStyle(
+    color: Configuration.defaultColor,
+    fontSize: 64,
+    fontWeight: FontWeight.bold,
+  );
+
+  static final clockAmOrPmStyle = TextStyle(
+    color: Configuration.defaultColor,
+    fontSize: 18,
+    fontWeight: FontWeight.bold,
+  );
+
+  static final clockDateStyle = TextStyle(
+      color: Configuration.defaultColor,
+      fontSize: 18,
+      fontStyle: FontStyle.italic);
 
   static TextPainter _createPainter(String text, Color color, int fontSize) {
     final textStyle =
@@ -86,8 +104,8 @@ class Constants {
 
         String key = "${charSets[cIndex]}.B.$fontSize";
 
-        textPainters[key] =
-            _createPainter(charSets[cIndex], Colors.green, fontSize);
+        textPainters[key] = _createPainter(
+            charSets[cIndex], Configuration.defaultColor, fontSize);
       }
     }
 
@@ -134,24 +152,26 @@ class Constants {
 }
 
 class Configuration {
-  static final int sideDisplayFlex = 35;
+  static int sideDisplayFlex = 35;
 
-  static final int defaultFontSize = 28;
-  static final int maxFontSize = 30;
-  static final int maxLocationTextLength = 22;
+  static int defaultFontSize = 28;
+  static int maxFontSize = 30;
+  static int maxLocationTextLength = 22;
 
-  static final leadingCharacters = 5;
-  static final tailCharacters = 5;
-  static final maxCharacters = 30;
-  static final minCharacters = 12;
+  static int leadingCharacters = 5;
+  static int tailCharacters = 5;
+  static int maxCharacters = 30;
+  static int minCharacters = 12;
 
-  static final streamGenerationInterval = 5;
-  static final maxStreamSpeed = 6;
+  static int streamGenerationInterval = 5;
+  static int maxStreamSpeed = 6;
 
-  static final List<GradientColor> leadingGradientColors = List()
+  static Color defaultColor = Colors.green;
+
+  static List<GradientColor> leadingGradientColors = List()
     ..add(GradientColor(Colors.black.withAlpha(0), 0))
-    ..add(GradientColor(Colors.green, 1));
-  static final List<GradientColor> tailGradientColors = List()
-    ..add(GradientColor(Colors.green, 0))
+    ..add(GradientColor(defaultColor, 1));
+  static List<GradientColor> tailGradientColors = List()
+    ..add(GradientColor(defaultColor, 0))
     ..add(GradientColor(Colors.white, 1));
 }
