@@ -23,7 +23,7 @@ class DigitalClock extends StatefulWidget {
   _DigitalClockState createState() => _DigitalClockState();
 }
 
-class _DigitalClockState extends State<DigitalClock> {
+class _DigitalClockState extends State<DigitalClock> with WidgetsBindingObserver {
   DateTime _dateTime = DateTime.now();
   Timer _timer;
 
@@ -38,6 +38,8 @@ class _DigitalClockState extends State<DigitalClock> {
     widget.model.addListener(_updateModel);
     _updateTime();
     _updateModel();
+
+    WidgetsBinding.instance.addObserver(this);
   }
 
   @override
@@ -51,10 +53,23 @@ class _DigitalClockState extends State<DigitalClock> {
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+
     _timer?.cancel();
     widget.model.removeListener(_updateModel);
     widget.model.dispose();
     super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+
+    if (state == AppLifecycleState.resumed) {
+      Logger.debug("resuming to the clock, update time and model");
+      _updateTime();
+      _updateModel();
+    }
   }
 
   void _updateModel() {
