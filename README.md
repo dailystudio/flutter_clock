@@ -1,2 +1,6 @@
 # flutter_clock
-Flutter for Flutter Clock challenge
+This clock is mainly used to take part in **Flutter Clock challenge**
+
+More details, please visit:
+https://flutter.dev/clock
+
